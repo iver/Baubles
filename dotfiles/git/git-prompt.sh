@@ -81,6 +81,8 @@
 
 # __gitdir accepts 0 or 1 arguments (i.e., location)
 # returns location of .git repo
+set GIT_PS1_SHOWUPSTREAM="auto"
+
 __gitdir ()
 {
 	# Note: this function is duplicated in git-completion.bash
@@ -410,3 +412,11 @@ __git_ps1 ()
 		fi
 	fi
 }
+
+function ahead_behind {
+    curr_branch=$(git rev-parse --abbrev-ref HEAD);
+    curr_remote=$(git config branch.$curr_branch.remote);
+    curr_merge_branch=$(git config branch.$curr_branch.merge | cut -d / -f 3);
+    git rev-list --left-right --count $curr_branch...$curr_remote/$curr_merge_branch | tr -s '\t' '|';
+}
+
