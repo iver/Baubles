@@ -13,6 +13,9 @@
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
 [apply]
   whitespace = warn
+[user]
+  name = Ivan Jaimes
+  email = ivan.jaimes@iver.mx
 [core]
 	excludesfile = ~/.gitignore_global
 	quotepath = off
