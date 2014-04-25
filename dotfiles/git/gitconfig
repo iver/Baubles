@@ -28,3 +28,6 @@
 [push]
   # Only push branches that have been set up to track a remote branch
   default = current
+[user]
+	name = Ivan
+	email = ivan.jaimes@iver.mx
