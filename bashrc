@@ -13,12 +13,7 @@ source ~/Config/dotfiles/git/git-prompt.sh
 . ~/Config/dotfiles/bash/paths
 
 # Uncomment this line if you want to load ssh-id
-<<<<<<< HEAD
-~/Config/dotfiles/bash/load_keys.sh  
-=======
 . ~/Config/dotfiles/bash/load_keys.sh
->>>>>>> 932582e682973fd69aef4e6537f7170fd63cf9e3
-
 # [ -z "$SP1" ] && return
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
