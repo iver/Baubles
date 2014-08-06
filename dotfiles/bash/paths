@@ -39,15 +39,15 @@ localpaths () {
   # Add RVM to PATH for scripting
   PATH=$PATH:$HOME/.rvm/bin
 
-  LPATH=/opt/php53/bin:${LPATH}
+#  LPATH=/opt/php53/bin:${LPATH}
   LPATH=.:${LPATH}
   PATH=${LPATH}
 }
 
 # Cursor and profile
 localpaths
-java17
+# java17
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+# PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting

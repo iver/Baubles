@@ -25,6 +25,8 @@
   autocorrect = 1
 [status]
   submodule = 1
+[credential "https://www.bitbucket.org"]
+  username = ivan-iver
 [push]
   # Only push branches that have been set up to track a remote branch
   default = current
