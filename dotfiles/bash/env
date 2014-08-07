@@ -99,7 +99,6 @@ unset USERNAME
 
 # TODO: Detect interface dynamically
 IFACE=eth0
-
 MYIP=`ping -c1 ${HOSTNAME} | awk '/icmp_/{print $0}' | sed 's/^.*[^0-9]\([0-9]*\.[0-9]*\.[0-9]*\.[0-9]*\).*$/\1/'`
 
 if [ "$MYIP" = "127.0.0.1" ]

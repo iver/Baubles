@@ -1,4 +1,5 @@
 [alias]
+  ci = commit
   co = checkout
   # Log display from screencast, with train tracks.
   l = log --graph --pretty=format':%C(yellow)%h%Cblue%d%Creset %s %C(white) %an, %ar%Creset'
@@ -11,8 +12,15 @@
   # Usage: git track origin/feature-123-login-form
   track = checkout -t
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
+  f = fetch
+  s = status
+  b = branch
+  hash = rev-parse --short HEAD
 [apply]
   whitespace = warn
+[user]
+  name = Ivan Jaimes
+  email = ivan.jaimes@iver.mx
 [core]
 	excludesfile = ~/.gitignore_global
 	quotepath = off
@@ -30,3 +38,16 @@
 [push]
   # Only push branches that have been set up to track a remote branch
   default = current
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path =
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+# [mergetool]
+#	keepBackup = true
+#	prompt = false
+[merge]
+#  tool = kdiff3
+  stat = true
+

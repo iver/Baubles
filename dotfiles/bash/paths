@@ -12,10 +12,6 @@
 # input mode
 umask 0007
 
-java17 () {
-  PATH=/opt/jre1.7.0_17/bin:${LPATH}
-}
-
 localpaths () {
   LPATH=${PATH}
 
@@ -35,7 +31,6 @@ localpaths () {
   [ -d /opt/local/bin ] && LPATH=/opt/local/bin:${LPATH}
   [ -d ${HOME}/apps ] && LPATH=${HOME}/apps:${LPATH}
   [ -d ${HOME}/bin ] && LPATH=${HOME}/bin:${LPATH}
-
   # Add RVM to PATH for scripting
   PATH=$PATH:$HOME/.rvm/bin
 
@@ -47,7 +42,5 @@ localpaths () {
 # Cursor and profile
 localpaths
 # java17
-
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
 # PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
