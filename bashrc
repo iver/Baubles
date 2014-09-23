@@ -17,3 +17,5 @@ source ~/Config/dotfiles/git/git-prompt.sh
 # [ -z "$SP1" ] && return
 
 
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
