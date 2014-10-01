@@ -17,7 +17,6 @@
   call neobundle#rc(expand('~/.vim/bundle/'))
 
   " Github Repos
-  NeoBundle 'Shougo/vimproc'              " Interactive command execution
   NeoBundle 'Shougo/neocomplcache'        " Ultimate auto-completion system
   NeoBundle 'scrooloose/syntastic'        " Syntax checking hacks
   NeoBundle 'scrooloose/nerdtree'         " A tree explorer plugin
@@ -46,6 +45,8 @@
 "  NeoBundle 'SirVer/ultisnips'            " UltiSnips plugin
 "  NeoBundle 'honza/vim-snippets'          " Snippets for UltiSnips
 
+  NeoBundleLazy 'Shougo/vimproc'              " Interactive command execution
+
   " Javascript
   NeoBundleLazy 'kchmck/vim-coffee-script', {'autoload':{'filetypes':['coffee']}}
   NeoBundleLazy 'pangloss/vim-javascript', {'autoload':{'filetypes':['javascript', 'js']}}
@@ -60,8 +61,8 @@
   NeoBundleLazy 'kana/vim-textobj-user', {'autoload':{'filetypes':['eruby', 'ruby', 'erb']}}
   NeoBundleLazy 'nelstrom/vim-textobj-rubyblock', {'autoload':{'filetypes':['eruby', 'ruby', 'erb']}}
   NeoBundleLazy 'tpope/vim-rbenv', {'autoload':{'filetypes':['eruby', 'ruby', 'erb']}}
-  NeoBundle 'tpope/vim-bundler'
   NeoBundleLazy 'KurtPreston/vim-autoformat-rails', {'autoload':{'filetypes':['eruby', 'ruby', 'erb']}}
+  NeoBundle 'tpope/vim-bundler'
 
   " Themes
   NeoBundle 'mtortonesi/vim-irblack'
