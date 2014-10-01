@@ -25,6 +25,7 @@
   NeoBundle 'kien/ctrlp.vim'              " Fuzzy file, buffer, mru, tag, etc finder
   NeoBundle 'myusuf3/numbers.vim'         " A vim plugin for better line numbers
   NeoBundle 'bling/vim-airline'           " Status line, 100% vimscript; no python needed.
+  NeoBundle 'Lokaltog/vim-easymotion'     " Vim motions on speed!
   NeoBundle 'mattn/zencoding-vim'         " zen-coding for vim: http://code.google.com/p/zen-coding/
   NeoBundle 'ervandew/supertab'           " Perform all your vim insert mode completions with Tab
   NeoBundle 'hail2u/vim-css3-syntax'      " Add CSS3 syntax support to vim's built-in `syntax/css.vim`
@@ -32,19 +33,45 @@
   NeoBundle 'wavded/vim-stylus'           " Syntax Highlighting for Stylus
   NeoBundle 'keitheis/vim-plim'           " Syntax Highlighting for Plim
   NeoBundle 'digitaltoad/vim-jade'        " Vim Jade template engine syntax highlighting and indention
-  NeoBundle 'pangloss/vim-javascript'     " Vastly improved vim's javascript indentation
   NeoBundle 'plasticboy/vim-markdown'     " Syntax highlighting and matching rules for Markdown
   NeoBundle 'tpope/vim-fugitive'          " A Git wrapper so awesome, it should be illegal
   NeoBundle 'tpope/vim-surround'          " quoting/parenthesizing made simple
-  NeoBundle 'rizzatti/funcoo.vim'
-  NeoBundle 'rizzatti/dash.vim'           " Search Dash.app from Vim
+  NeoBundle 'slim-template/vim-slim'      " Slim template for vim
+  NeoBundle 'fatih/vim-go'                " Syntax highlighting to go
+  NeoBundle 'dgryski/vim-godef'           " Go to definition in go files
+  NeoBundle 'Blackrush/vim-gocode'        " Bundle go code
+  NeoBundle 'majutsushi/tagbar'           " Vim plugin that displays tags in a window, ordered by scope  http://majutsushi.github.com/tagbar/
+  NeoBundle 'vim-scripts/dbext.vim'       " This plugin contains functions/mappings/commands to enable Vim to access several databases.
+
+"  NeoBundle 'SirVer/ultisnips'            " UltiSnips plugin
+"  NeoBundle 'honza/vim-snippets'          " Snippets for UltiSnips
+
+  " Javascript
+  NeoBundleLazy 'kchmck/vim-coffee-script', {'autoload':{'filetypes':['coffee']}}
+  NeoBundleLazy 'pangloss/vim-javascript', {'autoload':{'filetypes':['javascript', 'js']}}
+  NeoBundleLazy 'maksimr/vim-jsbeautify', {'autoload':{'filetypes':['javascript', 'js']}}
+  NeoBundleLazy 'leshill/vim-json', {'autoload':{'filetypes':['javascript','json', 'js']}}
+
+  " Ruby
+  NeoBundleLazy 'janx/vim-rubytest', {'autoload':{'filetypes':['eruby', 'ruby', 'erb']}}
+  NeoBundleLazy 'brentmc79/vim-rspec', {'autoload':{'filetypes':['eruby', 'ruby', 'erb']}}
+  NeoBundleLazy 'tpope/vim-rails', {'autoload':{'filetypes':['eruby', 'ruby', 'erb']}}
+  NeoBundleLazy 'vim-ruby/vim-ruby', {'autoload':{'filetypes':['eruby', 'ruby', 'erb']}}
+  NeoBundleLazy 'kana/vim-textobj-user', {'autoload':{'filetypes':['eruby', 'ruby', 'erb']}}
+  NeoBundleLazy 'nelstrom/vim-textobj-rubyblock', {'autoload':{'filetypes':['eruby', 'ruby', 'erb']}}
+  NeoBundleLazy 'tpope/vim-rbenv', {'autoload':{'filetypes':['eruby', 'ruby', 'erb']}}
+  NeoBundle 'tpope/vim-bundler'
+  NeoBundleLazy 'KurtPreston/vim-autoformat-rails', {'autoload':{'filetypes':['eruby', 'ruby', 'erb']}}
+
+  " Themes
+  NeoBundle 'mtortonesi/vim-irblack'
 
   " Github `vim-scripts`
+  NeoBundle 'rizzatti/funcoo.vim'
+  NeoBundle 'rizzatti/dash.vim'           " Search Dash.app from Vim
   NeoBundle 'sudo.vim'                    " Allows one to edit a file with prevledges from an unprivledged session
   NeoBundle 'ack.vim'                     " Plugin for the Perl module / CLI script 'ack'
-  NeoBundle 'EasyMotion'                  " Vim motions on speed!
   NeoBundle 'taglist.vim'                 " Provides an overview of the structure of source code
-  NeoBundle 'UltiSnips'                   " The ultimate snippet solution for python enabled Vim
 
   " Auto-Installation
   if neobundle#exists_not_installed_bundles()
@@ -55,7 +82,7 @@
 " }
 
 " General {
-  syntax on                  " syntax highlighting
+  syntax enable                  " syntax highlighting
   filetype plugin indent on  " automatically detect file types
   set mouse=a                " automatically enable mouse usage
   set mousehide              " hide the mouse cursor while typing
@@ -74,8 +101,12 @@
   set virtualedit=onemore         " allow for cursor beyond last character
   set history=800                 " Store a ton of history (default is 20)
   set hidden                      " allow buffer switching without saving
+  set viminfo^=%                  " Remember info about open buffers on close
+  set ttyfast                     " this is the 21st century, people
   "set autochdir                   " change directory to the current window
-" }
+
+  let loaded_matchparen = 1 " this should fix issue with long lines
+  " }
 
 " Formatting {
   set nowrap                      " wrap long lines
@@ -198,7 +229,7 @@
   let NERDTreeMouseMode = 2
   let NERDTreeShowHidden = 1
   let NERDTreeKeepTreeInNewTab = 1
-  let g:NERDTreeWinSize = 20
+  let g:NERDTreeWinSize = 40
   let g:nerdtree_tabs_open_on_gui_startup = 0
 
   " open a NERDTree automatically when vim starts up if no files were specified
@@ -219,6 +250,64 @@
   let g:html_indent_inctags = 'html,body,head,tbody'
   let g:html_indent_script1 = 'inc'
   let g:html_indent_style1 = 'inc'
+" }
+
+" go {
+  let Tlist_Ctags_Cmd= '/usr/local/bin/ctags'
+  source ~/.vim/conf/go.vim
+  " General
+"  au FileType go setlocal noexpandtab
+"  au FileType go setlocal ts=3
+"  au FileType go setlocal sw=3
+"  let g:indent_guides_enable_on_vim_startup = 0
+
+  "godef
+"  let g:godef_split=0
+"  au FileType go let g:godef_same_file_in_same_window = 0
+
+" }
+
+" tagbar {
+  nmap <F8> :TagbarToggle<CR>
+  let g:tagbar_width = 45
+  let g:tagbar_left = 1
+  let g:tagbar_autofocus = 0
+  hi TagbarHighlight term=standout ctermfg=0 ctermbg=11 guifg=Black guibg=Yellow
+
+  au FileType go let g:tagbar_type_go = {
+    \ 'ctagstype' : 'go',
+    \ 'kinds'     : [
+        \ 'p:package',
+        \ 'i:imports:1',
+        \ 'c:constants',
+        \ 'v:variables',
+        \ 't:types',
+        \ 'n:interfaces',
+        \ 'w:fields',
+        \ 'e:embedded',
+        \ 'm:methods',
+        \ 'r:constructor',
+        \ 'f:functions'
+    \ ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : {
+        \ 't' : 'ctype',
+        \ 'n' : 'ntype'
+    \ },
+    \ 'scope2kind' : {
+        \ 'ctype' : 't',
+        \ 'ntype' : 'n'
+    \ },
+    \ 'ctagsbin'  : 'gotags',
+    \ 'ctagsargs' : '-sort -silent'
+    \ }
+" }
+
+" UltiSnips configuration {
+"  let g:UltiSnipsExpandTrigger="<tab>"
+"  let g:UltiSnipsJumpForwardTrigger="<c-b>"
+"  let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+"  let g:UltiSnipsEditSplit="horizontal"
 " }
 
 " neocomplcache {
@@ -276,18 +365,19 @@
 
 " Airline {
   let g:airline_powerline_fonts = 1
+"  let g:airline_theme='bubblegum'
+  let g:airline#extensions#whitespace#checks=[]
+  let g:airline#extensions#tagbar#enabled = 1
 " }
 
 " EasyMotion {
-  let g:EasyMotion_leader_key = '<Leader>'
-
   " Compatible with `solarized` colorscheme
   hi link EasyMotionTarget ErrorMsg
   hi link EasyMotionShade  Comment
 " }
 
 " UltiSnips {
-  let g:UltiSnipsSnippetDirectories=["snippets"]
+"  let g:UltiSnipsSnippetDirectories=["snippets"]
 " }
 
 " Dash {
