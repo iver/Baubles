@@ -11,7 +11,7 @@ if [ $(which git) ]; then
 
   ln -s ~/Config/dotfiles/vim/vimrc ~/.vim/vimrc
   echo 'source ~/.vim/vimrc' > ~/.vimrc
-  ln -s ~/Config/dotfiles/vim/conf/go.vim ~/.vim/go.vim
+  ln -s ~/Config/dotfiles/vim/conf/go.vim ~/.vim/conf/go.vim
 else
    echo 'Git is not installed.'
 fi
