@@ -1,6 +1,7 @@
 #!/bin/sh
 
 # common alias
+alias l="ls"
 alias ls="ls -F"
 alias ll='ls -lhG'  # -l long listing, human readable, no group info
 #alias ll="ls -l"
