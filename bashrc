@@ -19,10 +19,17 @@ source ~/Config/dotfiles/git/git-prompt.sh
 # [ -z "$SP1" ] && return
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
+if [ -f ~/.profile ]; then
+  . ~/.profile
+fi
 
+# The next line updates PATH for the Google Cloud SDK.
+source '/Users/Iver/Workspace/google-cloud-sdk/path.bash.inc'
 
-### Added by the Heroku Toolbelt
-export PATH="/usr/local/heroku/bin:$PATH"
+# The next line enables shell command completion for gcloud.
+source '/Users/Iver/Workspace/google-cloud-sdk/completion.bash.inc'
