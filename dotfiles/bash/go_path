@@ -14,8 +14,8 @@ umask 0007
 config () {
   [ -d /usr/local/go ] && export GOROOT=/usr/local/go
   [ -d ${HOME}/Workspace/go ] && export GOPATH=${HOME}/Workspace/go
-  [ -d ${GOPATH}/bin ] && export GOBIN=${GOPATH}/bin
-  PATH=${PATH}:${GOBIN}
+  [ -d ${GOROOT}/bin ] && export LPATH=${GOROOT}/bin
+  PATH=${PATH}:${LPATH}
 }
 
 config

@@ -101,7 +101,7 @@ unset USERNAME
 # get IP Address
 
 # TODO: Detect interface dynamically
-IFACE=en1
+IFACE=en0
 
 MYIP=`ping -c1 ${HOSTNAME} | awk '/icmp_/{print $0}' | sed 's/^.*[^0-9]\([0-9]*\.[0-9]*\.[0-9]*\.[0-9]*\).*$/\1/'`
 if [ -z "$MYIP" -o "$MYIP" = "127.0.0.1" ]
@@ -115,7 +115,4 @@ fi
 
 # Cursor and profile
 cmdstyle
-
-export ATLAS_TOKEN="KKWeY05AYRnHng.atlasv1.EBXthoMy3apDrwwEdMP0xHtWWVRBmIqvtg2vTD5b67zkGrv3eVnkTPh5EX4oX1jzbwc"
-
 
