@@ -31,9 +31,6 @@ localpaths () {
   [ -d /sbin ] && LPATH=/sbin:${LPATH}
   [ -d /bin ] && LPATH=/bin:${LPATH}
 
-  # google
-  [ -d /usr/local/google/gsutil ] && LPATH=/usr/local/google/gsutil:${LPATH}
-
   # locals
   [ -d /usr/local/bin ] && LPATH=/usr/local/bin:${LPATH}
   [ -d /opt/local/sbin ] && LPATH=/opt/local/sbin:${LPATH}
@@ -55,8 +52,4 @@ localpaths () {
 
 # Cursor and profile
 localpaths
-# java17
-export MIGRATIONS_HOME=/usr/local/mybatis/mybatis-migrations-3.2.1/
-export MIGRATIONS=$MIGRATIONS_HOME/bin
-export PATH=$MIGRATIONS:$PATH
 

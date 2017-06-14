@@ -10,12 +10,12 @@ if [ ! -d ~/.vim ]; then
   source ~/.vim/install.sh
 fi
 
-[ -f ~/.gitconfig ] || ln -s ${CURRENT}/git/config ~/.gitconfig
-[ -f ~/.gitignore_global ] || ln -s ${CURRENT}/git/gitignore_global ~/.gitignore_global
+[ -f ~/.gitconfig ] || ln -s ${CURRENT}/dotfiles/git/config ~/.gitconfig
+[ -f ~/.gitignore_global ] || ln -s ${CURRENT}/dotfiles/git/gitignore_global ~/.gitignore_global
 [ -f ~/.bash_profile ] || ln -s ${CURRENT}/dotfiles/bash_profile ~/.bash_profile
 [ -f ~/.tmux.conf ] || ln -s ${CURRENT}/dotfiles/tmux.conf ~/.tmux.conf
 [ -f ~/.nanorc ] || ln -s ${CURRENT}/dotfiles/nanorc ~/.nanorc
-[ -f ~/.ssh/load_keys ] || touch ~/.ssh/load_keys
+[ -f ~/.ssh/load_keys ] || cp ${CURRENT}/templates/load_keys ~/.ssh/load_keys
 if [ -d ~/.vim/bundle/vimproc ]; then
    cd ~/.vim/bundle/vimproc && make
 fi

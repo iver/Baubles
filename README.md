@@ -55,6 +55,19 @@ Your dot files configuration is ready. So ... enjoy it!
 - **maintenance** maintenance scripts directory.
   - **dump_databases.sh** Backup each mysql databases into a different file, rather than one big file
 
+## Troubleshooting
+
+***
+
+#### While opening a *.go file.
+
+Message: ``Exuberant ctags not found ``
+
+Fix:
+
+1.  ``` sudo apt-get install exuberant-ctags ```
+2.  ``` vim -c ':GoInstallBinaries ```
+
 ### <a name="copy"></a> Copyright and license
 
 ***
