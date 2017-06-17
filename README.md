@@ -68,6 +68,11 @@ Fix:
 1.  ``` sudo apt-get install exuberant-ctags ```
 2.  ``` vim -c ':GoInstallBinaries ```
 
+on Mac:
+
+1. ```brew install ctags-exuberant```
+
+
 ### <a name="copy"></a> Copyright and license
 
 ***
