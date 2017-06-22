@@ -14,3 +14,4 @@ unlink ${HOME}/.gitignore_global
 unlink ${HOME}/.bash_profile
 unlink ${HOME}/.tmux.conf
 unlink ${HOME}/.nanorc
+unlink ${HOME}/.ctags
