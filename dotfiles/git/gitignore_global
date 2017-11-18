@@ -40,6 +40,7 @@ Thumbs.db
 # Vim
 ######################
 .*.sw[a-z]
+tags
 
 # Directories
 ######################

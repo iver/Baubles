@@ -1,6 +1,6 @@
 #!/bin/sh
-# Iván Jaimes <ivan.iver@gmail.com>
-# File: git_deploy.sh
+# Iv¨¢n Jaimes <ivan@iver.mx>
+# File: git-export.sh
 
 PROG_NAME=$(basename $0)
 OUTPUTDIR=${PWD}
@@ -27,12 +27,13 @@ fi
 FILENAME=${BRANCH//\//_}
 FILENAME=${FILENAME//&/}
 echo "$FILENAME"
+
 if [ $ZIP_ENABLED == 1 ]; then
-	echo "Creating zip file to deploy ... "
+	echo "Creating zip file to export... "
 	git archive --format zip --output "$OUTPUTDIR/$FILENAME.zip" $BRANCH
 	echo " ... Finished "
 else
-	echo "Creating files to deploy ..."
+	echo "Creating files to export..."
 	git archive --output "$OUTPUTDIR/$FILENAME" $BRANCH
 	echo " ... Finished "
 fi

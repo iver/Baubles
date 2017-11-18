@@ -19,11 +19,12 @@
 [apply]
   whitespace = warn
 [user]
-  name = Ivan Jaimes
-  email = ivan.jaimes@iver.mx
+	name = Ivan Jaimes
+	email = ivan.jaimes@iver.mx
 [core]
 	excludesfile = ~/.gitignore_global
 	quotepath = off
+	editor = vim
 [color]
   diff = auto
   status = auto
@@ -38,16 +39,29 @@
 [push]
   # Only push branches that have been set up to track a remote branch
   default = current
+[merge]
+  tool = colordiff
+#  tool = kdiff3
+  stat = true
+[diff]
+  tool = colordiff
+[difftool "colordiff"]
+#  cmd = colordiff -y -W \"$COLUMNS\" \"$LOCAL\" \"$REMOTE\"
+  cmd = colordiff
+  path = /usr/local/bin/colordiff
+  trustExitCode = false
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path =
+	path = 
 [mergetool "sourcetree"]
 	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
 # [mergetool]
 #	keepBackup = true
 #	prompt = false
-[merge]
-#  tool = kdiff3
-  stat = true
 
+[filter "media"]
+	clean = git-media-clean %f
+	smudge = git-media-smudge %f
+[commit]
+	template = ~/.stCommitMsg

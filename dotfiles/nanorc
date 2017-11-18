@@ -1,0 +1,15 @@
+######
+#
+#    homebrew-dupes: These formulae duplicate software provided by OS X, though may provide more recent or bugfix versions.
+#
+#    Add the dupes formulae, then install a new version of nano.
+#
+#    $ brew tap homebrew/dupes
+#    $ brew install nano
+#
+#    Installing this way includes the /usr/local/share/nano folder containing the default syntax highlight files. You can now include "/usr/local/share/nano/c.nanorc" in ~/.nanorc.
+#
+#    Bonus: a run-once one-liner to add all languages.
+#
+#    $ /bin/ls /usr/local/share/nano/*.nanorc | xargs -I {} echo 'include "{}"' >> ~/.nanorc
+########

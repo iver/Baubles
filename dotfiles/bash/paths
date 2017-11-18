@@ -16,8 +16,10 @@ localpaths () {
   LPATH=${PATH}
 
   # Android
-  [ -d /opt/local/android-sdk-linux_x86_r13/tools ] && LPATH=/opt/local/android-sdk-linux_x86_r13/tools:${LPATH}
-  [ -d /opt/local/android-sdk-linux_x86_r13/platform-tools ] && LPATH=/opt/local/android-sdk-linux_x86_r13/platform-tools:${LPATH}
+  [ -d ${HOME}/Library/Android/sdk/tools ] && LPATH=${HOME}/Library/Android/sdk/tools:${LPATH}
+  [ -d ${HOME}/Library/Android/sdk/platform-tools ] && LPATH=${HOME}/Library/Android/sdk/platform-tools:${LPATH}
+  [ -d /usr/local/android/tools ] && LPATH=/usr/local/android/tools:${LPATH}
+  [ -d /usr/local/android/build-tools ] && LPATH=/usr/local/android/build-tools:${LPATH}
 
   # Other binaries
   [ -d /usr/sbin ] && LPATH=/usr/sbin:${LPATH}
@@ -31,8 +33,7 @@ localpaths () {
   [ -d /opt/local/bin ] && LPATH=/opt/local/bin:${LPATH}
   [ -d ${HOME}/apps ] && LPATH=${HOME}/apps:${LPATH}
   [ -d ${HOME}/bin ] && LPATH=${HOME}/bin:${LPATH}
-  # Add RVM to PATH for scripting
-  PATH=$PATH:$HOME/.rvm/bin
+
 
 #  LPATH=/opt/php53/bin:${LPATH}
   LPATH=.:${LPATH}
@@ -41,6 +42,5 @@ localpaths () {
 
 # Cursor and profile
 localpaths
-# java17
 
 # PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting

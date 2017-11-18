@@ -15,5 +15,6 @@ fi
 FILE_KEYS="$HOME/.ssh/load_keys"
 
 while read line; do
-  /usr/bin/ssh-add $line
+  case "$line" in \#*) continue ;; esac
+  /usr/bin/ssh-add ${HOME}/$line
 done < $FILE_KEYS

@@ -93,18 +93,21 @@ export HISTSIZE=1500
 export HISTCONTROL=ignoredups
 # export MANPATH=$HOME/manuals:$MANPATH
 
+export CLICOLOR=1
+export LSCOLORS=Dxfxcxdxbxegedabagacad
+
 unset USERNAME
 
 # get IP Address
 
 # TODO: Detect interface dynamically
 IFACE=eth0
-MYIP=`ping -c1 ${HOSTNAME} | awk '/icmp_/{print $0}' | sed 's/^.*[^0-9]\([0-9]*\.[0-9]*\.[0-9]*\.[0-9]*\).*$/\1/'`
 
-if [ "$MYIP" = "127.0.0.1" ]
+MYIP=`ping -c1 ${HOSTNAME} | awk '/icmp_/{print $0}' | sed 's/^.*[^0-9]\([0-9]*\.[0-9]*\.[0-9]*\.[0-9]*\).*$/\1/'`
+if [ -z "$MYIP" -o "$MYIP" = "127.0.0.1" ]
 then
 #  MYIP=`ifconfig ${IFACE} | awk '/inet:/{print $2}' | sed 's/^.*[^0-9]\([0-9]*\.[0-9]*\.[0-9]*\.[0-9]*\).*$/\1/'`
-   MYIP=`ifconfig ${IFACE}  | grep 'inet addr:'| grep -v '127.0.0.1' | cut -d: -f2 | awk '{ print $1}'`
+   MYIP=`ifconfig ${IFACE}  | grep 'broadcast' | awk '{ print $2}'`
 fi
 
 # specific host enviroment

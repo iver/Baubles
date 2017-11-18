@@ -14,7 +14,16 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias t='tail -fn'
 alias cdw='cd ~/Workspace'
-# alias mysql_stop='mysqladmin5 -u iver_root -p shutdown'
-# alias mysql_start='sudo mysqld_safe5 &'
+alias mysql_stop='/usr/local/bin/mysqladmin -u root -p shutdown'
+alias mysql_start='/usr/local/bin/mysqld_safe &'
+alias publish='python -m SimpleHTTPServer 5000'
 
+# alias pg-start='pg_ctl -D /usr/local/var/postgres/data -l /usr/local/var/postgres/log/server.log start'
+# alias pg-stop='pg_ctl stop -m fast'
+# alias pg-status='pg_ctl status'
+# alias pg-restart='pg_ctl reload'
 
+# alias fpm-start='launchctl load -w /usr/local/opt/php56/homebrew.mxcl.php56.plist'
+# alias fpm-stop='launchctl unload /usr/local/opt/php56/homebrew.mxcl.php56.plist'
+
+# alias purgeallbuilds='rm -rf ~/Library/Developer/Xcode/DerivedData/*'
