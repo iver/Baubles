@@ -4,6 +4,12 @@
 
 export CURRENT=`pwd`
 
+if [ ! -d ~/.vim ]; then
+  git clone https://github.com/iver/vitamine.git ~/.vim
+  chmod +x ~/.vim/install.sh
+  source ~/.vim/install.sh
+fi
+
 [ -f ~/.gitconfig ] || ln -s ${CURRENT}/dotfiles/git/config ~/.gitconfig
 [ -f ~/.gitignore_global ] || ln -s ${CURRENT}/dotfiles/git/gitignore_global ~/.gitignore_global
 [ -f ~/.bash_profile ] || ln -s ${CURRENT}/dotfiles/bash_profile ~/.bash_profile
