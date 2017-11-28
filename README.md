@@ -8,7 +8,6 @@ This repository is a result of having gathered many trinkets to configure the te
 * [Why](#why)
 * [Install](#install)
 * [Uninstall](#uninstall)
-* [Organization files](#files)
 * [Copyright and license](#copy)
 
 
@@ -25,8 +24,16 @@ There are a lot of dotfiles, a lot of castles, a little mess… Why don’t we c
 First at all, clone it!
 
 ```
-git clone https://github.com/iver/Baubles.git ~/Config
+git clone https://github.com/iver/Baubles.git ~/Config -b <branch-name>
 ```
+
+If you are working with Linux, you should clone the linux branch:
+
+```
+git clone https://github.com/iver/Baubles.git ~/Config -b linux
+```
+
+**Note:** For now I only support linux and mac.
 
 Then, you can run install script.
 
@@ -43,17 +50,6 @@ $> ./uninstall.sh
 ```
 
 Your dot files configuration is ready. So ... enjoy it!
-
-### <a name="files"></a> Organization files
-
-- **bashrc** a setup profile enviroment file for unix-like systems.
-- **dotFiles** git and bash scripts directory.
-  - **gitconfig** My global git configuration
-  - **gitignore_global**  Global git ignore configuration
-  - **gitignore_cake**  Git ignore configuration for cakephp projects
-  - **ssh_key_add.rb** Load all ssh_key files from ~/.ssh directory on Cygwin shell
-- **maintenance** maintenance scripts directory.
-  - **dump_databases.sh** Backup each mysql databases into a different file, rather than one big file
 
 ## Troubleshooting
 
