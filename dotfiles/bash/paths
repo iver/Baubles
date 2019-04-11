@@ -16,14 +16,38 @@ java17 () {
   PATH=/opt/jre1.7.0_17/bin:${LPATH}
 }
 
-localpaths () {
-  LPATH=${PATH}
+dart() {
+  [ -d /usr/local/opt/dart@2/bin ] && LPATH=/usr/local/opt/dart@2/bin:${PATH}
+  LPATH=.:${LPATH}
+  PATH=${LPATH}
+}
 
+ruby() {
+  [ -d /Users/iver/.gem/ruby/2.3.0/bin ] && LPATH=/Users/iver/.gem/ruby/2.3.0/bin:${PATH}
+  LPATH=.:${LPATH}
+  PATH=${LPATH}
+}
+
+android(){
+  LPATH=${PATH}
   # Android
   [ -d ${HOME}/Library/Android/sdk/tools ] && LPATH=${HOME}/Library/Android/sdk/tools:${LPATH}
   [ -d ${HOME}/Library/Android/sdk/platform-tools ] && LPATH=${HOME}/Library/Android/sdk/platform-tools:${LPATH}
   [ -d /usr/local/android/tools ] && LPATH=/usr/local/android/tools:${LPATH}
   [ -d /usr/local/android/build-tools ] && LPATH=/usr/local/android/build-tools:${LPATH}
+
+  LPATH=.:${LPATH}
+  PATH=${LPATH}
+}
+
+nosudo_node(){
+  # NPM package custom path
+  [ -d ${HOME}/.npm-packages ] && export NPM_PACKAGES="${HOME}/.npm-packages"
+  [ -d ${NPM_PACKAGES}/lib/node_modules ] && export NODE_PATH="${NPM_PACKAGES}/lib/node_modules:${NODE_PATH}"
+}
+
+localpaths () {
+  LPATH=${PATH}
 
   # Other binaries
   [ -d /usr/sbin ] && LPATH=/usr/sbin:${LPATH}
@@ -33,17 +57,22 @@ localpaths () {
 
   # locals
   [ -d /usr/local/bin ] && LPATH=/usr/local/bin:${LPATH}
+  [ -d /usr/local/sbin ] && LPATH=/usr/local/sbin:${LPATH}
   [ -d /opt/local/sbin ] && LPATH=/opt/local/sbin:${LPATH}
   [ -d /opt/local/bin ] && LPATH=/opt/local/bin:${LPATH}
   [ -d ${HOME}/apps ] && LPATH=${HOME}/apps:${LPATH}
   [ -d ${HOME}/bin ] && LPATH=${HOME}/bin:${LPATH}
+  [ -d ${HOME}/Library/Python/2.7/bin ] && LPATH=${HOME}/Library/Python/2.7/bin:${LPATH}
   [ -d /usr/local/php5/bin ] && LPATH=/usr/local/php5/bin:${LPATH}
   [ -d /usr/local/mysql/bin ] && LPATH=/usr/local/mysql/bin:${LPATH}
-  [ -d /usr/local/Cellar/postgresql/9.3.3/bin ] && LPATH=/usr/local/Cellar/postgresql/9.3.3/bin:${LPATH}
+  [ -d /usr/local/opt/postgresql@10/bin ] && LPATH=/usr/local/opt/postgresql@10/bin:${LPATH}
   [ -d /usr/local/sbin/ ] && LPATH=/usr/local/sbin:${LPATH}
 
   # jenv
   [ -d ${HOME}/.jenv/bin ] && LPATH=${HOME}/.jenv/bin:${LPATH}
+
+  nosudo_node
+  [ -d ${NPM_PACKAGES}/bin ] && LPATH=${NPM_PACKAGES}/bin:${LPATH}
 
   LPATH=.:${LPATH}
   PATH=${LPATH}
@@ -52,4 +81,6 @@ localpaths () {
 
 # Cursor and profile
 localpaths
-
+# android
+dart
+ruby

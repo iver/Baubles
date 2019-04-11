@@ -19,19 +19,22 @@
   call neobundle#begin(expand('~/.vim/bundle/'))
 
   " Github Repos
+  NeoBundle 'ekalinin/Dockerfile.vim'     " Docker syntax
   NeoBundle 'Shougo/vimproc'              " Interactive command execution
+  NeoBundle 'Valloric/YouCompleteMe'      " A code-completion engine for Vim
   NeoBundle 'Shougo/neocomplcache'        " Ultimate auto-completion system
   NeoBundle 'scrooloose/syntastic'        " Syntax checking hacks
   NeoBundle 'scrooloose/nerdtree'         " A tree explorer plugin
   NeoBundle 'scrooloose/nerdcommenter'    " Vim plugin for intensely orgasmic commenting
-  NeoBundle 'kien/ctrlp.vim'              " Fuzzy file, buffer, mru, tag, etc finder
+  NeoBundle 'ctrlpvim/ctrlp.vim'          " Fuzzy file, buffer, mru, tag, etc finder
   NeoBundle 'myusuf3/numbers.vim'         " A vim plugin for better line numbers
   NeoBundle 'bling/vim-airline'           " Status line, 100% vimscript; no python needed.
   NeoBundle 'Lokaltog/vim-easymotion'     " Vim motions on speed!
   NeoBundle 'mattn/emmet-vim'	          " Plug-in which provides support for expanding abbreviations
   NeoBundle 'ervandew/supertab'           " Perform all your vim insert mode completions with Tab
+  NeoBundle 'cakebaker/scss-syntax.vim'   " Vim syntax file for scss (Sassy CSS)
   NeoBundle 'hail2u/vim-css3-syntax'      " Add CSS3 syntax support to vim's built-in `syntax/css.vim`
-  NeoBundle 'skammer/vim-css-color'       " Highlight colors in css files
+  NeoBundle 'ap/vim-css-color'       " Highlight colors in css files
   NeoBundle 'wavded/vim-stylus'           " Syntax Highlighting for Stylus
   NeoBundle 'keitheis/vim-plim'           " Syntax Highlighting for Plim
   NeoBundle 'digitaltoad/vim-jade'        " Vim Jade template engine syntax highlighting and indention
@@ -44,12 +47,17 @@
   NeoBundle 'Blackrush/vim-gocode'        " Bundle go code
   NeoBundle 'majutsushi/tagbar'           " Vim plugin that displays tags in a window, ordered by scope  http://majutsushi.github.com/tagbar/
   NeoBundle 'vim-scripts/dbext.vim'       " This plugin contains functions/mappings/commands to enable Vim to access several databases.
-
-" Requires vim version at least 7.3.584
-"  NeoBundle 'Valloric/YouCompleteMe'         " YouCompleteMe is a fast, as-you-type, fuzzy-search code completion engine for Vim.
+" NeoBundle 'elixir-lang/vim-elixir'      " Elixir support for vim. This plugin also adds support for Elixir's templating language, EEx.
+  NeoBundle 'elixir-lang/vim-elixir'      " Vim configuration files for Elixir http://elixir-lang.org/
+"  NeoBundle 'Quramy/tsuquyomi'            " A Vim plugin for TypeScript
+  NeoBundle 'leafgarland/typescript-vim'  " A Vim plugin for Typescript
+  NeoBundle 'rcyrus/snipmate-snippets-rubymotion'  " some rubymotion snippets
+  NeoBundle 'chase/vim-ansible-yaml'      " Ansible yml plugin
+"  NeoBundle 'avdgaag/vim-phoenix'         " Vim plugin for working with the Phoenix framework
 
   NeoBundle 'SirVer/ultisnips'            " UltiSnips plugin
   NeoBundle 'honza/vim-snippets'          " Snippets for UltiSnips
+  NeoBundle 'godlygeek/tabular'           " Vim script for text filtering and alignment used by plasticboy/vim-markdown '
 
   " Javascript
   NeoBundleLazy 'kchmck/vim-coffee-script', {'autoload':{'filetypes':['coffee']}}
@@ -196,6 +204,7 @@
   set foldenable                  " auto fold code
   set cursorline                  " highlight current line
   set anti                        " make text pretty
+"   colorscheme tomorrow_night_bright
 " }
 
 " GUI Settings {
@@ -210,7 +219,10 @@
 "    else
 "      set guifont=Monaco:h13,Consolas:h13
 "    endif
-    set guifont=Liberation\ Mono\ for\ Powerline\ 10
+    if has("mac") || has("macunix")
+      set guifont=Monaco\ for\ Powerline:h24
+"    set guifont=Liberation\ Mono\ for\ Powerline\ 10
+    endif
   endif
 " }
 
@@ -246,6 +258,7 @@
 
   " toggle between relative and absolute numbering
   nnoremap <F3> :NumbersToggle<CR>
+  nnoremap <F4> :NumbersOnOff<CR>
 " }
 
 " NerdTree {
@@ -275,6 +288,8 @@
 "  let g:syntastic_python_checkers = ['flake8']
 "  let g:syntastic_python_flake8_args = '--ignore="E401,E501"'
 "  let g:syntastic_javascript_jshint_conf = '~/.jshintrc'
+let g:tsuquyomi_disable_quickfix = 1
+let g:syntastic_typescript_checkers = ['tsuquyomi'] " You shouldn't use 'tsc' checker.
 " }
 
 " vimScript {
@@ -287,60 +302,34 @@
   let Tlist_Ctags_Cmd= '/usr/local/bin/ctags'
   set rtp+=$GOPATH/src/github.com/golang/lint/misc/vim
   source ~/.vim/conf/go.vim
-  " General
-"  au FileType go setlocal noexpandtab
-"  au FileType go setlocal ts=3
-"  au FileType go setlocal sw=3
-"  let g:indent_guides_enable_on_vim_startup = 0
-
-  "godef
-"  let g:godef_split=0
-"  au FileType go let g:godef_same_file_in_same_window = 0
-
 " }
 
-" tagbar {
-  nmap <F8> :TagbarToggle<CR>
-  let g:tagbar_width = 45
-  let g:tagbar_left = 1
-  let g:tagbar_autofocus = 0
-  hi TagbarHighlight term=standout ctermfg=0 ctermbg=11 guifg=Black guibg=Yellow
+" make YCM compatible with UltiSnips (using supertab)
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:SuperTabDefaultCompletionType = '<C-n>'
 
-  au FileType go let g:tagbar_type_go = {
-    \ 'ctagstype' : 'go',
-    \ 'kinds'     : [
-        \ 'p:package',
-        \ 'i:imports:1',
-        \ 'c:constants',
-        \ 'v:variables',
-        \ 't:types',
-        \ 'n:interfaces',
-        \ 'w:fields',
-        \ 'e:embedded',
-        \ 'm:methods',
-        \ 'r:constructor',
-        \ 'f:functions'
-    \ ],
-    \ 'sro' : '.',
-    \ 'kind2scope' : {
-        \ 't' : 'ctype',
-        \ 'n' : 'ntype'
-    \ },
-    \ 'scope2kind' : {
-        \ 'ctype' : 't',
-        \ 'ntype' : 'n'
-    \ },
-    \ 'ctagsbin'  : 'gotags',
-    \ 'ctagsargs' : '-sort -silent'
-    \ }
-" }
 
 " UltiSnips configuration {
+  set runtimepath+=~/.vim/bundle/vim-snippets/snippets
+  let g:UltiSnipsUsePythonVersion = 2
   let g:UltiSnipsSnippetDirectories=["UltiSnips"]
-  let g:UltiSnipsExpandTrigger="<tab>"
-  let g:UltiSnipsJumpForwardTrigger="<c-b>"
-  let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+  let g:UltiSnipsExpandTrigger = "<nop>"
+  let g:ulti_expand_or_jump_res = 0
+  function ExpandSnippetOrCarriageReturn()
+      let snippet = UltiSnips#ExpandSnippetOrJump()
+      if g:ulti_expand_or_jump_res > 0
+          return snippet
+      else
+          return "\<CR>"
+      endif
+  endfunction
+  inoremap <expr> <CR> pumvisible() ? "<C-R>=ExpandSnippetOrCarriageReturn()<CR>" : "\<CR>"
+
   let g:UltiSnipsEditSplit="horizontal"
+  let g:UltiSnipsSnippetsDir=expand('~/.vim/bundle/vim-snippets/snippets/')
+  let g:UltiSnipsSnippetDirectories=["UltiSnips","UltiSnip"]
 " }
 
 " neocomplcache {
@@ -383,6 +372,7 @@
 
 " CSSColor {
   let g:cssColorVimDoNotMessMyUpdatetime = 1
+  au BufRead,BufNewFile *.scss set filetype=scss.css
 " }
 
 " Fugitive {
@@ -392,6 +382,8 @@
 "}
 
 " Powerline {
+  let g:Powerline_symbols = 'fancy'
+  let g:Powerline_colorscheme = 'tomorrow_night_blue'
 "  let g:Powerline_symbols = 'fancy'
 "  let g:Powerline_colorscheme = 'solarized256'
 " }
@@ -401,6 +393,33 @@
 "  let g:airline_theme='bubblegum'
   let g:airline#extensions#whitespace#checks=[]
   let g:airline#extensions#tagbar#enabled = 1
+
+  if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+
+" unicode symbols
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+let g:airline_symbols.linenr = '␊'
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.whitespace = 'Ξ'
+
+" airline symbols
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = ''
 " }
 
 " EasyMotion {
@@ -415,6 +434,8 @@
 
 " Autocmd {
   autocmd! bufwritepost vimrc source ~/.vim/vimrc
+  au BufRead,BufNewFile *.tag :set filetype=jade
+  au BufNewFile,BufRead *.es6 set filetype=javascript
 " }
 
 " Taglist {
@@ -475,3 +496,101 @@
   endfunction
   call InitializeDirectories()
 " }
+" COMMENTS SECTION
+"  ,# shell, perl, etc
+"  ,/ c++
+"  ,> email quote
+"  ," vim
+"  ,% latex, prolog
+"  ,! assembly/X-resources
+"  ,; scheme
+"  ,- sql, ada
+"  ,c clears any of the previous comments
+"
+" Here are the wrapping comments, each line wrapped individually:
+"
+"  ,* c
+"  ,( Standard ML
+"  ,< html
+"  ,d clears any of the wrapping comments
+
+" lhs comments
+map ,# :s/^/#/<CR> <Esc>:nohlsearch <CR>
+map ,/ :s/^/\/\//<CR> <Esc>:nohlsearch <CR>
+map ,> :s/^/> /<CR> <Esc>:nohlsearch<CR>
+map ," :s/^/\"/<CR> <Esc>:nohlsearch<CR>
+map ,% :s/^/%/<CR> <Esc>:nohlsearch<CR>
+map ,! :s/^/!/<CR> <Esc>:nohlsearch<CR>
+map ,; :s/^/;/<CR> <Esc>:nohlsearch<CR>
+map ,- :s/^/--/<CR> <Esc>:nohlsearch<CR>
+map ,c :s/^\/\/\\|^--\\|^> \\|^[#"%!;]//<CR> <Esc>:nohlsearch<CR>
+
+"map ,# :s/^/#/<CR>
+"map ,/ :s/^/\/\//<CR>
+"map ,> :s/^/> /<CR>
+"map ," :s/^/\"/<CR>
+"map ,% :s/^/%/<CR>
+"map ,! :s/^/!/<CR>
+"map ,; :s/^/;/<CR>
+"map ,- :s/^/--/<CR>
+"map ,c :s/^\/\/\\|^--\\|^> \\|^[#"%!;]//<CR>
+
+" wrapping comments
+"map ,* :s/^\(.*\)$/\/\* \1 \*\//<CR>
+"map ,( :s/^\(.*\)$/\(\* \1 \*\)/<CR>
+"map ,< :s/^\(.*\)$/<!-- \1 -->/<CR>
+"map ,d :s/^\([/(]\*\\|<!--\) \(.*\) \(\*[/)]\\|-->\)$/\2/<CR>
+
+map ,* :s/^\(.*\)$/\/\* \1 \*\//<CR> <Esc>:nohlsearch<CR>
+map ,( :s/^\(.*\)$/\(\* \1 \*\)/<CR><Esc>:nohlsearch <CR>
+map ,< :s/^\(.*\)$/<!-- \1 -->/<CR> <Esc>:nohlsearch<CR>
+map ,d :s/^\([/(]\*\\|<!--\) \(.*\) \(\*[/)]\\|-->\)$/\2/<CR> <Esc>:nohlsearch<CR>
+
+" Xml Prettyformat
+function! DoPrettyXML()
+  " save the filetype so we can restore it later
+  let l:origft = &ft
+  set ft=
+  " delete the xml header if it exists. This will
+  " permit us to surround the document with fake tags
+  " without creating invalid xml.
+  1s/<?xml .*?>//e
+  " insert fake tags around the entire document.
+  " This will permit us to pretty-format excerpts of
+  " XML that may contain multiple top-level elements.
+  0put ='<PrettyXML>'
+  $put ='</PrettyXML>'
+  silent %!xmllint --format -
+  " xmllint will insert an <?xml?> header. it's easy enough to delete
+  " if you don't want it.
+  "  delete the fake tags
+  2d
+  $d
+  " restore the 'normal' indentation, which is one extra level
+  " too deep due to the extra tags we wrapped around the document.
+  silent %<
+  " back to home
+  1
+  " restore the filetype
+  exe "set ft=" . l:origft
+endfunction
+command! PrettyXML call DoPrettyXML()
+
+" Elixir tagbar
+let g:tagbar_type_elixir = {
+    \ 'ctagstype' : 'elixir',
+    \ 'kinds' : [
+        \ 'f:functions',
+        \ 'functions:functions',
+        \ 'c:callbacks',
+        \ 'd:delegates',
+        \ 'e:exceptions',
+        \ 'i:implementations',
+        \ 'a:macros',
+        \ 'o:operators',
+        \ 'm:modules',
+        \ 'p:protocols',
+        \ 'r:records'
+    \ ]
+\ }
+

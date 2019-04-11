@@ -35,7 +35,7 @@ au FileType go imap <C-A-i> <C-\><C-O>call GoImportImap()
 au FileType go nmap <Leader>gd <Plug>(go-doc-split)
 au FileType go nnoremap <leader>m :silent make\|redraw!\|botright cwindow\|cc<CR>
 
-au BufEnter,FileType go :TagbarOpen
+" au BufEnter,FileType go :TagbarOpen
 
 " ***
 " GoDef
@@ -126,4 +126,4 @@ au FileType go nmap <leader>b <Plug>(go-build)
 au FileType go nmap <leader>t <Plug>(go-test)
 au FileType go nmap <leader>c <Plug>(go-coverage)
 
-" autocmd BufWritePost,FileWritePost *.go execute 'Lint' | cwindow
+autocmd BufWritePost,FileWritePost *.go execute 'Lint' | cwindow

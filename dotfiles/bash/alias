@@ -16,7 +16,7 @@ alias t='tail -fn'
 
 alias h='history'
 alias cdw='cd ~/Workspace'
-alias vim='/usr/local/Cellar/vim/8.0.1150/bin/vim'
+# alias vim='/usr/local/Cellar/vim/8.0.1150/bin/vim'
 alias mysql_stop='/usr/local/bin/mysqladmin -u root -p shutdown'
 alias mysql_start='/usr/local/bin/mysqld_safe &'
 alias publish='python -m SimpleHTTPServer 5000'
