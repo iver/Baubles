@@ -17,14 +17,15 @@ java17 () {
 }
 
 dart() {
-  [ -d /usr/local/opt/dart@2/bin ] && LPATH=/usr/local/opt/dart@2/bin:${PATH}
-  LPATH=.:${LPATH}
-  PATH=${LPATH}
+  if [ -d /usr/local/opt/dart@2/bin ]; then
+    LPATH=/usr/local/opt/dart@2/bin:${PATH}
+    LPATH=.:${LPATH}
+    PATH=${LPATH}
+  fi
 }
 
 ruby() {
 
-  [ -d /usr/local/rvm/gems/ruby-2.6.3/bin ] && LPATH=/usr/local/rvm/gems/ruby-2.6.3/bin:${PATH}
   [ -d /usr/local/opt/ruby/bin ] && LPATH=/usr/local/opt/ruby/bin:${PATH}
   LPATH=.:${LPATH}
   PATH=${LPATH}
@@ -85,4 +86,4 @@ localpaths () {
 localpaths
 # android
 dart
-ruby
+# ruby
