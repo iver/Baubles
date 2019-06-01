@@ -8,12 +8,12 @@
 . ~/Config/dotfiles/bash/env
 . ~/Config/dotfiles/bash/alias
 
+source ~/Config/rvm.sh
 . ~/Config/dotfiles/git/git-completion.bash
 source ~/Config/dotfiles/git/git-prompt.sh
 . ~/Config/dotfiles/bash/go_path
 . ~/Config/dotfiles/bash/paths
 source ~/Config/dotfiles/bash/go-complete.bash
-source ~/Config/rvm.sh
 
 # Uncomment this line if you want to load ssh-id
 . ~/Config/dotfiles/bash/load_keys.sh

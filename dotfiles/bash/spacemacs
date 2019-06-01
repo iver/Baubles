@@ -1,7 +1,10 @@
-;; -*- mode: emacs-lisp -*-
+;;; .spacemacs --- Configuration file for Emacs
+;;; -*- mode: emacs-lisp -*-
+;;; Commentary:
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
 
+;;; Code:
 (defun dotspacemacs/layers ()
   "Configuration Layers declaration.
 You should not put any user code in this function besides modifying the variable
@@ -185,53 +188,55 @@ values."
 It is called immediately after `dotspacemacs/init'.  You are free to put any
 user code."
   ; Set Path
-;  (when (memq window-system '(mac ns))
-;    (exec-path-from-shell-initialize))
-  (defun set-exec-path-from-shell-PATH ()
-    (let ((path-from-shell (replace-regexp-in-string
-                            "[ \t\n]*$"
-                            ""
-                            (shell-command-to-string "$SHELL --login -i -c 'echo $PATH'"))))
-      (setenv "PATH" path-from-shell)
-      (setq eshell-path-env path-from-shell) ; for eshell users
-      (setq exec-path (split-string path-from-shell path-separator))))
+;  (defun set-exec-path-from-shell-PATH ()
+;    (let ((path-from-shell (replace-regexp-in-string
+;                            "[ \t\n]*$"
+;                            ""
+;                            (shell-command-to-string "$SHELL --login -i -c 'echo $PATH'"))))
+;      (setenv "PATH" path-from-shell)
+;      (setq eshell-path-env path-from-shell) ; for eshell users
+;      (setq exec-path (split-string path-from-shell path-separator))))
 
-  (when window-system (set-exec-path-from-shell-PATH))
+;  (when window-system (set-exec-path-from-shell-PATH))
+
+;  (projectile-mode +1)
+  ;; (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+  ;; (perspectives :variables
+  ;;              perspective-enable-persp-projectile t)
+
+
+  (require 'all-the-icons)
+
 )
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
- This function is called at the very end of Spacemacs initialization after
+This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
 
   (global-linum-mode t)
-  (linum-relative-toggle)
+;  (linum-relative-toggle)
   (setq tab-width 2)
   (setq-default evil-shift-width 2)
   (set-fill-column 100)
-  (global-company-mode t)
-  (setq company-tooltip-limit 10)                      ; bigger popup window
-  (setq company-idle-delay .3)                         ; decrease delay before autocompletion popup shows
-  (setq company-minimum-prefix-length 2)
-  (setq company-selection-wrap-around t)               ; continue from top when reaching bottom
+;  (global-company-mode t)
+;  (setq company-tooltip-limit 10)                      ; bigger popup window
+;  (setq company-idle-delay .3)                         ; decrease delay before autocompletion popup shows
+;  (setq company-minimum-prefix-length 2)
+;  (setq company-selection-wrap-around t)               ; continue from top when reaching bottom
 
   ; Elixir and Erlang mode
-  (setq flycheck-elixir-credo-strict t)
+;  (setq flycheck-elixir-credo-strict t)
   ;; Create a buffer-local hook to run elixir-format on save, only when we enable elixir-mode.
-  ;; (add-hook 'elixir-mode-hook
-  ;;          (lambda () (add-hook 'before-save-hook 'elixir-format nil t)))
-  (add-hook 'elixir-format-hook (lambda ()
-                                  (if (projectile-project-p)
-                                      (setq elixir-format-arguments
-                                            (list "--dot-formatter"
-                                                  (concat (locate-dominating-file buffer-file-name ".formatter.exs") ".formatter.exs")))
-                                    (setq elixir-format-arguments nil))))
+  (add-hook 'elixir-mode-hook
+            (lambda () (add-hook 'before-save-hook 'elixir-format nil t)))
 
   (defun custom-erlang-mode-hook ()
-    (define-key erlang-mode-map (kbd "M-,") 'alchemist-goto-jump-back))
-  (add-hook 'erlang-mode-hook 'custom-erlang-mode-hook)
-  (add-hook 'alchemist-mode-hook 'company-mode)
-  (add-hook 'ruby-mode-hook 'ruby-test-mode)
+ ;   (define-key erlang-mode-map (kbd "M-,") 'alchemist-goto-jump-back)
+    )
+    (add-hook 'erlang-mode-hook 'custom-erlang-mode-hook)
+    (add-hook 'alchemist-mode-hook 'company-mode)
+    (add-hook 'ruby-mode-hook 'ruby-test-mode)
 ; (setq alchemist-goto-erlang-source-dir "/Users/iver/Workspace/forks/Erlang/otp/")              ; jump to Erlang source code
 ; (setq alchemist-goto-elixir-source-dir "/Users/iver/Workspace/forks/Elixir/elixir/")           ; jump to Elixir source code
 
@@ -246,25 +251,26 @@ layers configuration. You are free to put any user code."
   ; Autocomplete
   (add-to-list 'load-path "/Users/Iver/.emacs.d/lisp")
   (require 'auto-complete-config)
-  (add-to-list 'ac-dictionary-directories "/Users/Iver/.emacs.d/lisp/ac-dict")
-  (ac-config-default)
+ ; (add-to-list 'ac-dictionary-directories "/Users/Iver/.emacs.d/lisp/ac-dict")
+ ; (ac-config-default)
 
 
 ; Autoload go mode
 (add-to-list 'load-path "/Users/Iver/.emacs.d/")
 (autoload 'go-mode "go-mode" nil t)
-;(add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
-;(require 'go-mode-autoloads)
+(add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
+; (require 'go-mode-autoloads)
 
-(add-to-list 'load-path "/Users/Iver/.emacs.d/layers/go-autocomplete")
-(require 'go-autocomplete)
-;(require 'auto-complete-config)
+(ac-config-default)
+; (require 'go-autocomplete)
+; (require 'auto-complete-config)
+; (add-to-list 'load-path "/Users/Iver/.emacs.d/layers/go-autocomplete")
 
 
   ; Goimports
   (defun my-go-mode-hook ()
     ; Use goimports instead of go-fmt
-    (setq gofmt-command "goimports")
+;    (setq gofmt-command "goimports")
     ; Call Gofmt before saving
     (add-hook 'before-save-hook 'gofmt-before-save)
     ; Customize compile command to run go build
@@ -276,7 +282,7 @@ layers configuration. You are free to put any user code."
 
   (add-hook 'go-mode-hook 'my-go-mode-hook)
 
-)
+)  ;; end user-config()
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
@@ -287,17 +293,17 @@ layers configuration. You are free to put any user code."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (define-word go-guru go-eldoc company-go ws-butler winum which-key web-mode volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit spaceline powerline smeargle slim-mode scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe reveal-in-osx-finder restart-emacs rbenv rake rainbow-mode rainbow-identifiers rainbow-delimiters pug-mode popwin persp-mode pcre2el pbcopy paradox spinner osx-trash osx-dictionary orgit org-bullets open-junk-file ob-elixir neotree move-text mmm-mode minitest markdown-toc markdown-mode magit-gitflow macrostep lorem-ipsum linum-relative link-hint launchctl indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile helm-gitignore request helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag haml-mode google-translate golden-ratio gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md fuzzy flycheck-pos-tip pos-tip flycheck-mix flycheck-credo flycheck flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight erlang emmet-mode elm-mode elisp-slime-nav dumb-jump f diminish diff-hl company-web web-completion-data company-statistics column-enforce-mode color-identifiers-mode clean-aindent-mode chruby bundler inf-ruby bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed alchemist s company dash elixir-mode pkg-info epl aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup go-mode go-autocomplete go-autoloads all-the-icons doom-modeline))))
+    (auto-complete-exuberant-ctags auto-complete-rst doom-themes define-word go-guru go-eldoc company-go ws-butler winum which-key web-mode volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit spaceline powerline smeargle slim-mode scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe reveal-in-osx-finder restart-emacs rbenv rake rainbow-mode rainbow-identifiers rainbow-delimiters pug-mode popwin persp-mode pcre2el pbcopy paradox spinner osx-trash osx-dictionary orgit org-bullets open-junk-file ob-elixir neotree move-text mmm-mode minitest markdown-toc markdown-mode magit-gitflow macrostep lorem-ipsum linum-relative link-hint launchctl indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile helm-gitignore request helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag haml-mode google-translate golden-ratio gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md fuzzy flycheck-pos-tip pos-tip flycheck-mix flycheck-credo flycheck flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight erlang emmet-mode elm-mode elisp-slime-nav dumb-jump f diminish diff-hl company-web web-completion-data company-statistics column-enforce-mode color-identifiers-mode clean-aindent-mode chruby bundler inf-ruby bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed alchemist s company dash elixir-mode pkg-info epl aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup go-mode go-autocomplete go-autoloads all-the-icons doom-modeline))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+  ;; End of dot-spacemacs/user-config
 
-(projectile-mode +1)
-(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
-(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-;; (perspectives :variables
-;;              perspective-enable-persp-projectile t)
 
+;; Do not write anything past this comment. This is where Emacs will
+;; auto-generate custom variable definitions.
+(provide 'spacemacs)
+;;; spacemacs ends here
