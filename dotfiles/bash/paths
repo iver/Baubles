@@ -25,8 +25,7 @@ dart() {
 }
 
 ruby() {
-
-  [ -d /usr/local/opt/ruby/bin ] && LPATH=/usr/local/opt/ruby/bin:${PATH}
+  [ -d /Users/iver/.rvm/rubies/default/bin ] && LPATH=/Users/iver/.rvm/rubies/default/bin:${PATH}
   LPATH=.:${LPATH}
   PATH=${LPATH}
 }
@@ -86,4 +85,4 @@ localpaths () {
 localpaths
 # android
 dart
-# ruby
+ruby

@@ -31,14 +31,7 @@ else
 fi
 
 eval "$(pyenv init -)"
-
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/iver/Google/google-cloud-sdk/path.bash.inc' ]; then . '/Users/iver/Google/google-cloud-sdk/path.bash.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/iver/Google/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/iver/Google/google-cloud-sdk/completion.bash.inc'; fi
+eval "$(pyenv virtualenv-init -)"
 
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
@@ -47,7 +40,18 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-
 . $(brew --prefix asdf)/asdf.sh
-
 . $(brew --prefix asdf)/etc/bash_completion.d/asdf.bash
+
+export PATH=$PATH:$HOME/Library/Python/3.8/bin
+powerline-daemon -q
+POWERLINE_BASH_CONTINUATION=1
+POWERLINE_BASH_SELECT=1
+#. /Users/iver/Library/Python/3.8/lib/python/site-packages/powerline/bindings/bash/powerline.sh
+
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/usr/local/google-cloud-sdk/path.bash.inc' ]; then . '/usr/local/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/usr/local/google-cloud-sdk/completion.bash.inc' ]; then . '/usr/local/google-cloud-sdk/completion.bash.inc'; fi
