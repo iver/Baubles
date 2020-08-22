@@ -33,53 +33,59 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     sql
      javascript
      vimscript
      nginx
-     (yaml :variables yaml-enable-lsp t)
-     elixir
      docker
      markdown
-     go
      imenu-list
+     helm
+     markdown
+     html
+     git
+     emacs-lisp
+     erlang
+     syntax-checking
+     version-control
+     colors
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     helm
      ;auto-completion
-     (auto-completion :variables auto-completion-enable-snippets-in-popup t)
+     (auto-completion :variables
+                      auto-completion-enable-snippets-in-popup t)
      ;; better-defaults
-     emacs-lisp
-     erlang
+     ;; org
+     ;; spell-checking
+     (elixir :variables elixir-backend 'alchemist)
      (ruby :variables
            ruby-enable-ruby-on-rails-support t)
      (osx :variables
           osx-use-option-as-meta nil
           osx-dictionary-dictionary-choice "English"
           )
-     html
-     git
-     shell
      (shell :variables
             shell-default-shell 'eshell
             shell-default-position 'bottom
             shell-default-height 30
             )
-     markdown
-     ;; org
-     ;; (shell :variables
-     ;;        shell-default-height 30
-     ;;        shell-default-position 'bottom)
-     ;; spell-checking
-     syntax-checking
-     version-control
+     (go :variables
+         go-backend 'go-mode
+         go-tab-width 2
+         go-format-before-save t
+         godoc-at-point-function 'godoc-gogetdoc
+         )
+     (yaml :variables
+           yaml-enable-lsp t)
      (git :variables
           git-magit-status-fullscreen t
           git-gutter-use-fringe t)
-     colors
-     )
+     (latex :variables
+            latex-build-command "LaTeX")
+   )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
@@ -127,7 +133,21 @@ values."
    ;; use different package directories for different Emacs versions, set this
    ;; to `emacs-version'.
    dotspacemacs-elpa-subdirectory nil
-   ;; One of `vim', `emacs' or `hybrid'.
+   ;;(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(evil-want-Y-yank-to-eol nil)
+ '(package-selected-packages
+   '(ac-alchemist sqlfmt spacemacs-purpose-popwin org-super-star tex zoom-frm spacemacs-whitespace-cleanup spacemacs-theme spaceline-config nyan-mode info+ image-mode ido-vertical-mode hide-comnt help-fns+ helm-spacemacs-help helm-spacemacs-faq go-rename docker-mode dired-x centered-cursor-mode hybrid-mode holy-mode evil-evilified-state define-word font-lock yaml-mode xterm-color ws-butler winum which-key web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package toc-org tagedit spaceline smeargle slim-mode shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe reveal-in-osx-finder restart-emacs rbenv rake rainbow-mode rainbow-identifiers rainbow-delimiters pug-mode popwin persp-mode pbcopy paradox osx-trash osx-dictionary orgit org-bullets open-junk-file ob-elixir nginx-mode neotree multi-term move-text mmm-mode minitest markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode linum-relative link-hint launchctl js2-refactor js-doc indent-guide imenu-list hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio go-guru go-eldoc gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md fuzzy flycheck-pos-tip flycheck-credo flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help erlang emmet-mode elm-mode elisp-slime-nav dumb-jump dockerfile-mode docker diminish diff-hl dactyl-mode company-web company-statistics company-go column-enforce-mode color-identifiers-mode coffee-mode clean-aindent-mode chruby bundler auto-yasnippet auto-highlight-symbol auto-compile alchemist aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell lv reformatter transient tablist json-mode docker-tramp json-snatcher json-reformat memoize skewer-mode simple-httpd multiple-cursors js2-mode codeschool-theme lsp-mode auto-complete-exuberant-ctags auto-complete-rst doom-themes powerline pcre2el spinner markdown-mode hydra parent-mode projectile request haml-mode gitignore-mode fringe-helper git-gutter+ git-gutter pos-tip flycheck-mix flycheck flx magit magit-popup git-commit with-editor smartparens iedit anzu evil goto-chg undo-tree highlight f web-completion-data inf-ruby bind-map bind-key yasnippet packed s company dash elixir-mode pkg-info epl helm avy helm-core async auto-complete popup go-mode go-autocomplete go-autoloads all-the-icons doom-modeline company-tern)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+)  ;; One of `vim', `emacs' or `hybrid'.
    ;; `hybrid' is like `vim' except that `insert state' is replaced by the
    ;; `hybrid state' with `emacs' key bindings. The value can also be a list
    ;; with `:variables' keyword (similar to layers). Check the editing styles
@@ -158,7 +178,8 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(spacemacs-dark
+   dotspacemacs-themes '(
+                         spacemacs-dark
                          codeschool
                          monokai
                          leuven
@@ -168,12 +189,19 @@ values."
                          solarized-light
                          solarized-dark
                          )
+   ;; Currently supported themes are:
+   ;; spaceline themes: spacemacs, all-the-icons, custom
+   ;; a powerline theme: vim-powerline
+   ;; no theme at all: vanilla
+   dotspacemacs-mode-line-theme '(spacemacs :separator wave)
+
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    ;; "Roboto Mono Medium for Powerline", "Source Code Pro"
-   dotspacemacs-default-font '( "Cousine for Powerline"
+   dotspacemacs-default-font '(
+                               "Cousine for Powerline"
                                :size 16
                                :weight normal
                                :width normal
@@ -300,7 +328,7 @@ values."
    ;;                       text-mode
    ;;   :size-limit-kb 1000)
    ;; (default nil)
-   dotspacemacs-line-numbers t
+   dotspacemacs-line-numbers 'relative
    ;; Code folding method. Possible values are `evil' and `origami'.
    ;; (default 'evil)
    dotspacemacs-folding-method 'evil
@@ -331,8 +359,8 @@ values."
    ;; `trailing' to delete only the whitespace at end of lines, `changed'to
    ;; delete only whitespace for changed lines or `nil' to disable cleanup.
    ;; (default nil)
-   dotspacemacs-whitespace-cleanup nil
-   ))
+   dotspacemacs-whitespace-cleanup nil)
+)
 
 (defun dotspacemacs/user-init ()
   "Initialization function for user code.
@@ -352,14 +380,53 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
-  (setenv "GH_TOKEN" "9947b9bcc3fea97e5bad21c2d0a55d6b8f2b2e8d")
+  (add-hook 'after-init-hook
+            (lambda () (message "loaded in %s" (emacs-init-time))))
+
+  (add-hook 'evil-evilified-state-entry-hook
+            '(lambda () (evil-global-set-key 'evilified (kbd "M-<tab>") 'other-window)))
+
+  (use-package lsp-mode
+    :commands lsp
+    :ensure t
+    :diminish lsp-mode
+    :hook
+    (elixir-mode . lsp)
+    :init
+    (add-to-list 'exec-path "~/Config/elixir/elixir-ls"))
+
+  (use-package dumb-jump
+    :ensure t
+    :init
+    (setq dumb-jump-selector 'helm))
+
+  (use-package hl-todo
+    :hook (prog-mode . hl-todo-mode)
+    :config
+    (setq hl-todo-highlight-punctuation ":"
+          hl-todo-keyword-faces
+          `(("TODO"       warning bold)
+            ("FIXME"      error bold)
+            ("HACK"       font-lock-constant-face bold)
+            ("REVIEW"     font-lock-keyword-face bold)
+            ("NOTE"       success bold)
+            ("DEPRECATED" font-lock-doc-face bold))))
+
+  ;; Display time in powerline
+  (spacemacs|define-mode-line-segment date-time-segment
+                                      (shell-command-to-string "echo -n $(date +%k:%M--%m-%d)")
+                                      )
+  (add-to-list 'spacemacs-mode-line-right 'date-time-segment)
+  ;; end time
+
+  (setq use-package-always-ensure t)
   (global-linum-mode t)
   ;  (linum-relative-toggle)
   (setq tab-width 2)
   (setq-default evil-shift-width 2)
   (set-fill-column 100)
   ; Elixir and Erlang mode
-    (setq flycheck-elixir-credo-strict t)
+  (setq flycheck-elixir-credo-strict t)
   ;; Create a buffer-local hook to run elixir-format on save, only when we enable elixir-mode.
   (add-hook 'elixir-mode-hook
       (lambda () (add-hook 'before-save-hook 'elixir-format nil t)))
@@ -378,7 +445,7 @@ you should place your code here."
                                   (if (projectile-project-p)
                                       (setq elixir-format-arguments
                                             (list "--dot-formatter"
-                                                  (concat (projectile-project-root) "/src/.formatter.exs")))
+                                                  (concat (projectile-project-root) ".formatter.exs")))
                                     (setq elixir-format-arguments nil))))
   (use-package elixir-mode
     :ensure t
@@ -405,6 +472,7 @@ you should place your code here."
   (add-hook 'alchemist-mode-hook 'company-mode)
   (add-hook 'ruby-mode-hook 'ruby-test-mode)
 
+  ;; --------------- Golang configuration ---------------
   ; Set gopath env
   (setenv "GOPATH" "/Users/iver/Workspace/go")
 
@@ -413,11 +481,70 @@ you should place your code here."
   (add-to-list 'exec-path "/Users/iver/Workspace/go/bin")
   (add-hook 'before-save-hook 'gofmt-before-save)
 
+  ; Flycheck checker for golangci-lint
+  (eval-after-load 'flycheck
+    '(add-hook 'flycheck-mode-hook #'flycheck-golangci-lint-setup))
+
+  (use-package flycheck-golangci-lint
+    :ensure t
+    :hook (go-mode . flycheck-golangci-lint-setup))
+
+  ;; project path settings
+  (setq current-project-path (projectile-project-root))
+
+  (defun set-project-path (relative-path)
+    (interactive
+     (list (read-string "relative path: " "." nil nil nil)))
+    (setq current-project-path (file-truename relative-path)))
+
+  (defun get-project-path ()
+    (interactive)
+    (message current-project-path))
+
+  ;; go build/install
+  (setq default-go-package "")
+
+  (defun go-build (&optional pkg)
+    (interactive
+     (list (read-string (format "Package Name[%s]: " default-go-package) nil nil "")))
+
+    (if (not (string= pkg ""))
+      (setq default-go-package pkg))
+
+    (if (string= current-project-path "")
+      (message "You MUST set current-project-path FIRST!")
+      (projectile-with-default-dir current-project-path
+        (projectile-run-compilation (concat "go build " default-go-package))))
+  )
+
+  (defun go-install (&optional pkg)
+    (interactive
+     (list (read-string (format "Package Name[%s]: " default-go-package) nil nil "")))
+
+    (if (not (string= pkg ""))
+      (setq default-go-package pkg))
+
+    (if (string= current-project-path "")
+      (message "You MUST set current-project-path FIRST!")
+      (projectile-with-default-dir current-project-path
+        (projectile-run-compilation (concat "go install " default-go-package))))
+  )
+
+  ;; set shortcuts
+  (spacemacs/set-leader-keys-for-major-mode 'go-mode
+    "xi" 'go-install)
+
+  (spacemacs/set-leader-keys-for-major-mode 'go-mode
+    "xb" 'go-build)
+
+  ;; ----------------- End Golang configuration ----------
+
   ; Autocomplete
   (add-to-list 'load-path "/Users/iver/.emacs.d/lisp")
   (require 'auto-complete-config)
   ; (add-to-list 'ac-dictionary-directories "/Users/iver/.emacs.d/lisp/ac-dict")
   ; (ac-config-default)
+
 
   ; Autoload go mode
   (add-to-list 'load-path "/Users/iver/.emacs.d/")
@@ -426,28 +553,47 @@ you should place your code here."
   ; (require 'go-mode-autoloads)
 
   (ac-config-default)
-  ; (require 'go-autocomplete)
-  ; (require 'auto-complete-config)
-  ; (add-to-list 'load-path "/Users/iver/.emacs.d/layers/go-autocomplete")
+  (require 'go-autocomplete)
+  (require 'auto-complete-config)
+  (add-to-list 'load-path "/Users/iver/.emacs.d/layers/go-autocomplete")
 
 
-  ; Goimports
-  (defun my-go-mode-hook ()
-  ; Use goimports instead of go-fmt
-  ;    (setq gofmt-command "goimports")
-  ; Call Gofmt before saving
-    (add-hook 'before-save-hook 'gofmt-before-save)
-  ; Customize compile command to run go build
-    (if (not (string-match "go" compile-command))
-        (set (make-local-variable 'compile-command)
-             "go build -v && go test -v && go vet"))
-    ; Godef jump key binding
-    (local-set-key (kbd "M-.") 'godef-jump))
+  ;; Goimports
+  ;; (defun my-go-mode-hook ()
+  ;;   ; Use goimports instead of go-fmt
+  ;;   ;    (setq gofmt-command "goimports")
+  ;;   ; Call Gofmt before saving
+  ;;   (add-hook 'before-save-hook 'gofmt-before-save)
+  ;;   ; Customize compile command to run go build
+  ;;   (if (not (string-match "go" compile-command))
+  ;;       (set (make-local-variable 'compile-command)
+  ;;            "go build -v && go test -v && go vet"))
+  ;;   ; Godef jump key binding
+  ;;   (local-set-key (kbd "M-.") 'godef-jump))
 
-  (add-hook 'go-mode-hook 'my-go-mode-hook)
-  (add-to-list 'package-archives
-       ; '("melpa" . "http://melpa.milkbox.net/packages/"))
-         '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+  ;; (add-hook 'go-mode-hook 'my-go-mode-hook)
+
+  ;; LaTex
+  (add-hook 'LaTeX-mode-hook
+            (lambda ()
+              (setq TeX-auto-untabify t     ; remove all tabs before saving
+                    TeX-engine 'xetex       ; use xelatex default
+                    TeX-show-compilation t  ; display compilation windows
+                    TeX-command-extra-options . "-shell-escape") ; add -shell-escape
+              (TeX-global-PDF-mode t)       ; PDF mode enable, not plain
+              (setq TeX-save-query nil)
+              (imenu-add-menubar-index)
+              (define-key LaTeX-mode-map (kbd "TAB") 'TeX-complete-symbol)))
+  ;; end LaTex
+
+  ;; PACKAGE ARCHIVES
+  (setq package-enable-at-startup nil)
+  (setq package-archives '(("gnu" . "http://mirrors.163.com/elpa/gnu/")
+                           ("melpa" . "https://melpa.org/packages/")
+                           ("org" . "http://orgmode.org/elpa/")))
+  ; (add-to-list 'package-archives
+  ;      '("melpa" . "http://melpa.milkbox.net/packages/"))
+       ;  '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 
 );; end user-config()
 
@@ -459,8 +605,8 @@ you should place your code here."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   (quote
-    (vimrc-mode nginx-mode imenu-list lv reformatter dockerfile-mode docker transient tablist json-mode docker-tramp json-snatcher json-reformat dactyl-mode memoize web-beautify livid-mode skewer-mode simple-httpd js2-refactor multiple-cursors js2-mode js-doc coffee-mode xterm-color shell-pop multi-term eshell-z eshell-prompt-extras esh-help codeschool-theme lsp-mode auto-complete-exuberant-ctags auto-complete-rst doom-themes define-word go-guru go-eldoc company-go ws-butler winum which-key web-mode volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit spaceline powerline smeargle slim-mode scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe reveal-in-osx-finder restart-emacs rbenv rake rainbow-mode rainbow-identifiers rainbow-delimiters pug-mode popwin persp-mode pcre2el pbcopy paradox spinner osx-trash osx-dictionary orgit org-bullets open-junk-file ob-elixir neotree move-text mmm-mode minitest markdown-toc markdown-mode magit-gitflow macrostep lorem-ipsum linum-relative link-hint launchctl indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile helm-gitignore request helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag haml-mode google-translate golden-ratio gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md fuzzy flycheck-pos-tip pos-tip flycheck-mix flycheck-credo flycheck flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight erlang emmet-mode elm-mode elisp-slime-nav dumb-jump f diminish diff-hl company-web web-completion-data company-statistics column-enforce-mode color-identifiers-mode clean-aindent-mode chruby bundler inf-ruby bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed alchemist s company dash elixir-mode pkg-info epl aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup go-mode go-autocomplete go-autoloads all-the-icons doom-modeline yaml-mode company-tern))))
+    (quote
+   (zoom-frm spacemacs-whitespace-cleanup spacemacs-theme spaceline-config nyan-mode info+ image-mode ido-vertical-mode hide-comnt help-fns+ helm-spacemacs-help helm-spacemacs-faq go-rename docker-mode dired-x centered-cursor-mode hybrid-mode holy-mode evil-evilified-state define-word font-lock yaml-mode xterm-color ws-butler winum which-key web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package toc-org tagedit spaceline smeargle slim-mode shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe reveal-in-osx-finder restart-emacs rbenv rake rainbow-mode rainbow-identifiers rainbow-delimiters pug-mode popwin persp-mode pbcopy paradox osx-trash osx-dictionary orgit org-bullets open-junk-file ob-elixir nginx-mode neotree multi-term move-text mmm-mode minitest markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode linum-relative link-hint launchctl js2-refactor js-doc indent-guide imenu-list hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio go-guru go-eldoc gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md fuzzy flycheck-pos-tip flycheck-credo flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help erlang emmet-mode elm-mode elisp-slime-nav dumb-jump dockerfile-mode docker diminish diff-hl dactyl-mode company-web company-statistics company-go column-enforce-mode color-identifiers-mode coffee-mode clean-aindent-mode chruby bundler auto-yasnippet auto-highlight-symbol auto-compile alchemist aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell lv reformatter transient tablist json-mode docker-tramp json-snatcher json-reformat memoize skewer-mode simple-httpd multiple-cursors js2-mode codeschool-theme lsp-mode auto-complete-exuberant-ctags auto-complete-rst doom-themes powerline pcre2el spinner markdown-mode hydra parent-mode projectile request haml-mode gitignore-mode fringe-helper git-gutter+ git-gutter pos-tip flycheck-mix flycheck flx magit magit-popup git-commit with-editor smartparens iedit anzu evil goto-chg undo-tree highlight f web-completion-data inf-ruby bind-map bind-key yasnippet packed s company dash elixir-mode pkg-info epl helm avy helm-core async auto-complete popup go-mode go-autocomplete go-autoloads all-the-icons doom-modeline company-tern))))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -473,3 +619,4 @@ you should place your code here."
 ;; auto-generate custom variable definitions.
 (provide 'spacemacs)
 ;;; spacemacs ends here
+
