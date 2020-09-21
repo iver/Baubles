@@ -55,3 +55,7 @@ if [ -f '/usr/local/google-cloud-sdk/path.bash.inc' ]; then . '/usr/local/google
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/usr/local/google-cloud-sdk/completion.bash.inc' ]; then . '/usr/local/google-cloud-sdk/completion.bash.inc'; fi
+
+export PATH="$HOME/.cargo/bin:$PATH"
+
+eval "$(direnv hook bash)"
