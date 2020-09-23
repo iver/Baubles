@@ -51,7 +51,7 @@
   trustExitCode = false
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
+	path =
 [mergetool "sourcetree"]
 	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
@@ -69,19 +69,23 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+
 [interactive]
   diffFilter = delta --color-only
+
 [delta]
   features = side-by-side line-numbers decorations
   whitespace-error-style = 22 reverse
   plus-color = "#012800"
   minus-color = "#340001"
   syntax-theme = Monokai Extended
+
 [delta "decorations"]
   commit-decoration-style = bold yellow box ul
   file-style = bold yellow ul
   file-decoration-style = none
   hunk-header-decoration-style = yellow box
+
 [delta "unobtrusive-line-numbers"]
   line-numbers = true
   line-numbers-minus-style = "#444444"
