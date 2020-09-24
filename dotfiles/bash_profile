@@ -8,7 +8,6 @@
 . ~/Config/dotfiles/bash/env
 . ~/Config/dotfiles/bash/alias
 
-source ~/Config/rvm.sh
 . ~/Config/dotfiles/git/git-completion.bash
 source ~/Config/dotfiles/git/git-prompt.sh
 . ~/Config/dotfiles/bash/go_path
@@ -31,7 +30,6 @@ else
 fi
 
 eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/iver/Google/google-cloud-sdk/path.bash.inc' ]; then . '/Users/iver/Google/google-cloud-sdk/path.bash.inc'; fi
@@ -46,13 +44,11 @@ export NVM_DIR="$(brew --prefix nvm)"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-. $(brew --prefix asdf)/asdf.sh
-. $(brew --prefix asdf)/etc/bash_completion.d/asdf.bash
-
-export PATH=$PATH:$HOME/Library/Python/3.8/bin
+export PATH=$PATH:$HOME/.local/bin
 powerline-daemon -q
 POWERLINE_BASH_CONTINUATION=1
 POWERLINE_BASH_SELECT=1
+# . /Users/iver/.local/lib/python3.7/site-packages/powerline/bindings/bash/powerline.sh
 #. /Users/iver/Library/Python/3.8/lib/python/site-packages/powerline/bindings/bash/powerline.sh
 
 
@@ -65,3 +61,10 @@ if [ -f '/usr/local/google-cloud-sdk/completion.bash.inc' ]; then . '/usr/local/
 export PATH="$HOME/.cargo/bin:$PATH"
 
 eval "$(direnv hook bash)"
+
+. $(brew --prefix asdf)/asdf.sh
+. $(brew --prefix asdf)/etc/bash_completion.d/asdf.bash
+
+source ~/Config/rvm.sh
+export PATH="/usr/local/opt/postgresql/bin:$PATH"
+[[ -s "$HOME/.kiex/scripts/kiex" ]] && source "$HOME/.kiex/scripts/kiex"
