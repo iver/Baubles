@@ -68,3 +68,6 @@ eval "$(direnv hook bash)"
 source ~/Config/rvm.sh
 export PATH="/usr/local/opt/postgresql/bin:$PATH"
 [[ -s "$HOME/.kiex/scripts/kiex" ]] && source "$HOME/.kiex/scripts/kiex"
+
+# heroku autocomplete setup
+HEROKU_AC_BASH_SETUP_PATH=/Users/iver/Library/Caches/heroku/autocomplete/bash_setup && test -f $HEROKU_AC_BASH_SETUP_PATH && source $HEROKU_AC_BASH_SETUP_PATH;

@@ -73,3 +73,9 @@ doc/
 .settings
 .idea
 
+# My local database backup
+priv/0000_schema.sql
+
+tools/schema/
+tools/db/*.sql
+tools/db/*.dump
