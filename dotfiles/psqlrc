@@ -1,0 +1,71 @@
+-- vi:syntax=sql
+-- Reference:
+-- https://www.manniwood.com/2005_01_01/recommended_psqlrc.html
+-- https://thoughtbot.com/blog/an-explained-psqlrc
+
+-- Set client encoding to UTF8 (to match what is on the server)
+\encoding UTF8
+
+-- Be verbose about feedback
+\set VERBOSITY verbose
+
+-- Do not automatically commit after every statement
+-- \set AUTOCOMMIT off
+
+-- https://thoughtbot.com/blog/an-explained-psqlrc
+\set ON_ERROR_ROLLBACK interactive
+
+-- If a command is run more than once in a row, only store it once in the history.
+\set HISTCONTROL ignoredups
+
+-- Keep a different history file for each database name you log on to.
+\set HISTFILE ~/.psql_history- :DBNAME
+
+-- Keep a history of the last 2000 commands.
+\set HISTSIZE 2000
+
+
+/*
+ * Display
+ */
+
+-- Mute display setting changes below
+\set QUIET 1
+
+-- Render an empty string and a NULL differently
+\pset null ¤
+
+-- Prefer to have your SQL keywords in all caps
+\set COMP_KEYWORD_CASE upper
+
+-- Automatically use the table layout only if there’s enough space, otherwise resort to the key-value layout
+\x auto
+
+-- Show pretty unicode lines between rows and columns in select results.
+\pset linestyle unicode
+
+-- Turn off the pager so that results just keep scrolling by, rather than stopping.
+\pset pager off
+
+-- Prompt
+-- https://thoughtbot.com/blog/improving-the-command-line-postgres-experience
+-- %[ ... %]: coloring (32 green, 33 yellow, 34 blue, 35 magenta, 36 cyan, 37 white)
+-- %n: username
+-- %m: hostname
+-- %M: full hostname (with domain name)
+-- %>: port number
+-- %/: db name
+-- %x: transaction status
+-- %R: normally =, but ^ if in single-line mode, or ! if the session is disconnected from the database
+-- %#: '#' if superuser else '>'
+
+-- %m%n@%/ %x%R%# ' (without colors) means:
+-- [host][user]@[db] ['*' if in a transaction][normally '=' but '^' if in single-line mode, or ! if the session is disconnected]['#' if superuser else '>']
+\set PROMPT1 '%[%033[1m%]%M %[%033[1;33;40m%]%n@%/ %[%033[1;31;40m%]%x%[%033[0m%]%R%# '
+\set PROMPT2 '... %R> '
+
+-- Show how long it takes to run each query.
+\timing
+
+-- Unmute at the end
+\unset QUIET
