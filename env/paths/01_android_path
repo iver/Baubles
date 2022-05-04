@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+# android_path
+# --
+# (c) Iver!
+# Iván Jaimes <iver@iver.mx>
+# --
+# Goal: add android locations to path
+
+android_2_path() {
+  # Android
+  [ -d ${HOME}/Library/Android/sdk/tools ] && LPATH=${HOME}/Library/Android/sdk/tools:${LPATH}
+  [ -d ${HOME}/Library/Android/sdk/platform-tools ] && LPATH=${HOME}/Library/Android/sdk/platform-tools:${LPATH}
+  [ -d /usr/local/android/tools ] && LPATH=/usr/local/android/tools:${LPATH}
+  [ -d /usr/local/android/build-tools ] && LPATH=/usr/local/android/build-tools:${LPATH}
+}
+
+android_2_path

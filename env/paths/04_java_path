@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+# java_path
+# --
+# (c) Iver!
+# Iván Jaimes <iver@iver.mx>
+# --
+# Goal: add java locations to path
+
+java_2_path() {
+  local J_VERSION
+  J_VERSION="1.7.0_17"
+  if [ -d /opt/jre${J_VERSION}/bin ]; then
+    LPATH=/opt/jre${J_VERSION}/bin:${LPATH}
+  fi
+}
+
+java_2_path

@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+# pathrc
+# --
+# (c) Iver!
+# Iván Jaimes <iver@iver.mx>
+# --
+# Goal: load the files from the paths of the available languages
+LPATH=${PATH}
+
+load_file_path() {
+  for path_file in $(ls 0*); do
+    source ${path_file}
+  done
+}
+
+load_file_path
+
+LPATH=.:${LPATH}
+PATH=${LPATH}

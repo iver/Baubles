@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# mysql_path
+# --
+# (c) Iver!
+# Iván Jaimes <iver@iver.mx>
+# --
+# Goal: add mysql locations to path
+
+mysql_2_path() {
+  [ -d /usr/local/mysql/bin ] && LPATH=/usr/local/mysql/bin:${LPATH}
+}
+
+mysql_2_path

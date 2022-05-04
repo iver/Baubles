@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# python_path
+# --
+# (c) Iver!
+# Iván Jaimes <iver@iver.mx>
+# --
+# Goal: add python locations to path
+
+python_2_path() {
+  [ -d ${HOME}/Library/Python/2.7/bin ] && LPATH=${HOME}/Library/Python/2.7/bin:${LPATH}
+}
+
+python_2_path

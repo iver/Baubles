@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# postgres_path
+# --
+# (c) Iver!
+# Iván Jaimes <iver@iver.mx>
+# --
+# Goal: add postgres locations to path
+
+postgres_2_path() {
+  [ -d /usr/local/opt/postgresql@10/bin ] && LPATH=/usr/local/opt/postgresql@10/bin:${LPATH}
+}
+
+postgres_2_path

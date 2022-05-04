@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# go_path
+# --
+# (c) Iver!
+# Iván Jaimes <iver@iver.mx>
+# --
+# Goal: add ruby locations to path
+
+umask 0007
+
+ruby_2_path() {
+  [ -d /Users/iver/.rvm/rubies/default/bin ] && LPATH=/Users/iver/.rvm/rubies/default/bin:${PATH}
+}
+
+ruby_2_path

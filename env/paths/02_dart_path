@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# dart_path
+# --
+# (c) Iver!
+# Iván Jaimes <iver@iver.mx>
+# --
+# Goal: add dart locations to path
+
+dart_2_path() {
+  if [ -d /usr/local/opt/dart@2/bin ]; then
+    LPATH=/usr/local/opt/dart@2/bin:${LPATH}
+  fi
+}
+
+dart_2_path

@@ -1,3 +1,9 @@
+#!/usr/bin/env bash
+
+set -o errexit
+set -o nounset
+set -o pipefail
+
 # --
 # (c) Iver!
 # Iván Jaimes <ivan.iver@gmail.com>
@@ -5,23 +11,31 @@
 # This is a setup profile enviroment file for unix-like systems.
 # See bash_rc or bash_profile for more information.
 
-. ~/Config/dotfiles/bash/env
-. ~/Config/dotfiles/bash/alias
+DOT_FILES=~/Config/dotfiles
 
-. ~/Config/dotfiles/git/git-completion.bash
-source ~/Config/dotfiles/git/git-prompt.sh
-. ~/Config/dotfiles/bash/go_path
-. ~/Config/dotfiles/bash/paths
-source ~/Config/dotfiles/bash/go-complete.bash
+load_env_files() {
+  # shellcheck source=/dev/null
+  . "${DOT_FILES}/bash/env"
+  # shellcheck source=/dev/null
+  . "${DOT_FILES}/bash/alias"
 
-# Uncomment this line if you want to load ssh-id
-. ~/Config/dotfiles/bash/load_keys.sh
+  # shellcheck source=/dev/null
+  . "${DOT_FILES}/git/git-completion.bash"
+  # shellcheck source=/dev/null
+  source ${DOT_FILES}/git/git-prompt.sh
+  # shellcheck source=/dev/null
+  . ${DOT_FILES}/bash/go_path
+  # shellcheck source=/dev/null
+  . ${DOT_FILES}/bash/paths
+  # shellcheck source=/dev/null
+  source ${DOT_FILES}/bash/go-complete.bash
+}
 
-# [ -z "$SP1" ] && return
+load_ssh_keys() {
+  # shellcheck source=/dev/null
+  [[ -f ${DOT_FILES}/bash/load_keys.sh ]]  && . ${DOT_FILES}/bash/load_keys.sh
+}
 
-if [ -f ~/.profile ]; then
-  . ~/.profile
-fi
 
 if type brew 2&>/dev/null; then
   source "$(brew --prefix)/etc/bash_completion"
@@ -52,12 +66,6 @@ POWERLINE_BASH_SELECT=1
 #. /Users/iver/Library/Python/3.8/lib/python/site-packages/powerline/bindings/bash/powerline.sh
 
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/usr/local/google-cloud-sdk/path.bash.inc' ]; then . '/usr/local/google-cloud-sdk/path.bash.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/usr/local/google-cloud-sdk/completion.bash.inc' ]; then . '/usr/local/google-cloud-sdk/completion.bash.inc'; fi
-
 export PATH="$HOME/.cargo/bin:$PATH"
 
 eval "$(direnv hook bash)"
@@ -71,3 +79,13 @@ export PATH="/usr/local/opt/postgresql/bin:$PATH"
 
 # heroku autocomplete setup
 HEROKU_AC_BASH_SETUP_PATH=/Users/iver/Library/Caches/heroku/autocomplete/bash_setup && test -f $HEROKU_AC_BASH_SETUP_PATH && source $HEROKU_AC_BASH_SETUP_PATH;
+
+main() {
+  load_env_files
+
+  if [ -f ~/.profile ]; then
+    . ~/.profile
+  fi
+}
+
+main

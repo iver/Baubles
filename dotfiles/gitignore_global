@@ -79,3 +79,5 @@ priv/0000_schema.sql
 tools/schema/
 tools/db/*.sql
 tools/db/*.dump
+
+tools/bin/*
