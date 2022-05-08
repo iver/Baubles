@@ -1,0 +1,9 @@
+# Iván Jaimes <ivan.iver@gmail.com>
+# File: keys_to_load
+# --
+# (c) Iver!
+#
+#################
+# Adds the name of the files containing 
+# the private key (for example id_rsa) you want to load into memory
+# 

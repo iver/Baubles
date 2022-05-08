@@ -1,9 +1,4 @@
 #!/usr/bin/env bash
-
-set -o errexit
-set -o nounset
-set -o pipefail
-
 # --
 # (c) Iver!
 # Iván Jaimes <ivan.iver@gmail.com>
@@ -11,10 +6,18 @@ set -o pipefail
 # This is a setup profile enviroment file for unix-like systems.
 # See bash_rc or bash_profile for more information.
 
+set -o errexit
+set -o nounset
+set -o pipefail
+
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+
 CONF_FILES=~/Config
 ENV_FILES="${CONF_FILES}/env"
 DOT_FILES="${CONF_FILES}/dotfiles"
 PATH_FILES="${CONF_FILES}/env/paths"
+UTILS_PATH="${CONF_FILES}/scripts/utils"
 
 load_env_files() {
   # shellcheck source=/dev/null
@@ -35,43 +38,65 @@ load_env_files() {
 
 load_ssh_keys() {
   # shellcheck source=/dev/null
-  [[ -f ${DOT_FILES}/bash/load_keys.sh ]]  && . ${DOT_FILES}/bash/load_keys.sh
+  if [[ -f ${UTILS_PATH}/ssh_keys.sh ]]; then
+    . ${UTILS_PATH}/ssh_keys.sh
+    read_on_init
+  fi
 }
 
+brew_autocomplete() {
+  if type brew 2&>/dev/null; then
+    source "$(brew --prefix)/etc/bash_completion"
+  else
+    echo "run: brew install git bash-completion"
+  fi
+}
 
-if type brew 2&>/dev/null; then
-  source "$(brew --prefix)/etc/bash_completion"
-else
-  echo "run: brew install git bash-completion"
-fi
+pyenv_init() {
+  eval "$(pyenv init -)"
+}
 
-eval "$(pyenv init -)"
+google_sdk_init() {
+  # The next line updates PATH for the Google Cloud SDK.
+  if [ -f '/Users/iver/Google/google-cloud-sdk/path.bash.inc' ]; 
+    then . '/Users/iver/Google/google-cloud-sdk/path.bash.inc'; 
+  fi
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/iver/Google/google-cloud-sdk/path.bash.inc' ]; then . '/Users/iver/Google/google-cloud-sdk/path.bash.inc'; fi
+  # The next line enables shell command completion for gcloud.
+  if [ -f '/Users/iver/Google/google-cloud-sdk/completion.bash.inc' ];
+    then . '/Users/iver/Google/google-cloud-sdk/completion.bash.inc'; 
+  fi
+}
 
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/iver/Google/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/iver/Google/google-cloud-sdk/completion.bash.inc'; fi
+nvm_init() {
+  export NVM_DIR="$(brew --prefix nvm)"
+  # loads nvm
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+  # loads nvm bash_completion
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+}
 
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
+powerline_init() {
+  export PATH=$PATH:$HOME/.local/bin
+  powerline-daemon -q
+  POWERLINE_BASH_CONTINUATION=1
+  POWERLINE_BASH_SELECT=1
 
-export NVM_DIR="$(brew --prefix nvm)"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+  # . ${HOME}/.local/lib/python3.7/site-packages/powerline/bindings/bash/powerline.sh
+  #. ${HOME}/Library/Python/3.8/lib/python/site-packages/powerline/bindings/bash/powerline.sh
+}
 
-export PATH=$PATH:$HOME/.local/bin
-powerline-daemon -q
-POWERLINE_BASH_CONTINUATION=1
-POWERLINE_BASH_SELECT=1
-# . /Users/iver/.local/lib/python3.7/site-packages/powerline/bindings/bash/powerline.sh
-#. /Users/iver/Library/Python/3.8/lib/python/site-packages/powerline/bindings/bash/powerline.sh
+direnv_init() {
+  eval "$(direnv hook bash)"
+}
 
-
-eval "$(direnv hook bash)"
-
-. $(brew --prefix asdf)/asdf.sh
-. $(brew --prefix asdf)/etc/bash_completion.d/asdf.bash
+asdf_init() {
+  local ASDF_PATH
+  ASDF_PATH="$(brew --prefix asdf)"
+  
+  . ${ASDF_PATH}/asdf.sh
+  . ${ASDF_PATH}/etc/bash_completion.d/asdf.bash
+}
 
 main() {
   load_env_files

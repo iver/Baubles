@@ -64,7 +64,7 @@ remove_dot_files() {
 
 ssh_config() {
     templates="$1"
-    [ -f ~/.ssh/load_keys ] || cp "${templates}/templates/load_keys" ~/.ssh/load_keys
+    [ -f ~/.ssh/keys_to_load ] || cp "${templates}/templates/keys_to_load" ~/.ssh/keys_to_load
 }
 
 sync_submodule() {
