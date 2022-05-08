@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+# --
+# (c) Iver!
+# Iván Jaimes <ivan.iver@gmail.com>
+#
+# Goals script:
+#
+#   * Group functions related to dot files
+
+create_profile() {
+    dot_files="$1"
+
+    if [ -f ~/.bash_profile ]; then
+        cat ~/.bash_profile > ~/.bash_profile.bkp;
+        cp ${DOT_FILES}/iver_profile > ~/.iver_profile
+    else
+        ln -s "${DOT_FILES}/iver_profile" ~/.bash_profile
+    fi
+}
+
+create_vim_data() {
+  if [ ! -d ~/.vim ]; then
+    git clone https://github.com/iver/vitamine.git ~/.vim
+    chmod +x ~/.vim/install.sh
+    # shellcheck source=/dev/null
+    source ~/.vim/install.sh
+  fi
+
+  if [ -d ~/.vim/bundle/vimproc ]; then
+    cd ~/.vim/bundle/vimproc && make
+  fi
+}
+
+link_dot_files() {
+  dot_files="$1"
+  [ -f ~/.ctags ] || ln -s "${dot_files}/ctags" ~/.ctags
+  [ -f ~/.gitconfig ] || ln -s "${dot_files}/gitconfig" ~/.gitconfig
+  [ -f ~/.gitignore_global ] || ln -s "${dot_files}/gitignore_global" ~/.gitignore_global
+  [ -f ~/.iex.exs ] || ln -s "${dot_files}/iex.exs" ~/.iex.exs
+  [ -f ~/.nanorc ] || ln -s "${dot_files}/nanorc" ~/.nanorc
+  [ -f ~/.psqlrc ] || ln -s "${dot_files}/psqlrc" ~/.psqlrc
+  [ -f ~/.spacemacs ] || ln -s "${dot_files}/spacemacs" ~/.spacemacs
+  [ -f ~/.tmux.conf ] || ln -s "${dot_files}/tmux.conf" ~/.tmux.conf
+}
+
+remove_dot_files() {
+    [ -f ~/.ctags ] && unlink ${HOME}/.ctags
+    [ -f ~/.gitconfig ] && unlink ${HOME}/.gitconfig
+    [ -f ~/.gitignore_global ] && unlink ${HOME}/.gitignore_global
+    [ -f ~/.iex.exs ] && unlink ${HOME}/.iex.exs
+    [ -f ~/.nanorc ] && unlink ${HOME}/.nanorc
+    [ -f ~/.psqlrc ] && unlink ${HOME}/.psqlrc
+    [ -f ~/.spacemacs ] && unlink ${HOME}/.spacemacs
+    [ -f ~/.tmux.conf ] && unlink ${HOME}/.tmux.conf
+    
+    [ -f ~/.bash_profile ] && unlink ${HOME}/.bash_profile
+    rm -f ~/.iver_profile
+
+    # if [ -d ~/.vim ]; then
+    #     rm -rf ~/.vim;
+    #     rm ~/.vimrc;
+    # fi
+}
+
+ssh_config() {
+    templates="$1"
+    [ -f ~/.ssh/load_keys ] || cp "${templates}/templates/load_keys" ~/.ssh/load_keys
+}
+
+sync_submodule() {
+  git submodule init .
+  git submodule update
+}

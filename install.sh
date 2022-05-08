@@ -1,51 +1,56 @@
 #!/usr/bin/env bash
+# --
+# (c) Iver!
+# Iván Jaimes <ivan.iver@gmail.com>
+#
+
+set -o errexit
+set -o nounset
+set -o pipefail
 
 [ "$USER" == "root" ] && echo "You should not install this for the root account." && exit 1
 
-CURRENT=$(pwd)
-DOT_FILES="${CURRENT}/dotfiles"
+PROJECT_PATH=$(pwd)
+SCRIPTS_PATH="${PROJECT_PATH}/scripts"
+UTILS_PATH="${SCRIPTS_PATH}/utils"
+TARGET_SCRIPT="${SCRIPTS_PATH}/install"
 
-create_vim_data() {
-  if [ ! -d ~/.vim ]; then
-    git clone https://github.com/iver/vitamine.git ~/.vim
-    chmod +x ~/.vim/install.sh
-    # shellcheck source=/dev/null
-    source ~/.vim/install.sh
-  fi
-
-  if [ -d ~/.vim/bundle/vimproc ]; then
-    cd ~/.vim/bundle/vimproc && make
-  fi
-}
-
-link_dot_files() {
-  [ -f ~/.gitconfig ] || ln -s "${DOT_FILES}/gitconfig" ~/.gitconfig
-  [ -f ~/.gitignore_global ] || ln -s "${DOT_FILES}/gitignore_global" ~/.gitignore_global
-  [ -f ~/.tmux.conf ] || ln -s "${DOT_FILES}/tmux.conf" ~/.tmux.conf
-  [ -f ~/.nanorc ] || ln -s "${DOT_FILES}/nanorc" ~/.nanorc
-  [ -f ~/.ctags ] || ln -s "${DOT_FILES}/ctags" ~/.ctags
-  [ -f ~/.ssh/load_keys ] || cp "${CURRENT}/templates/load_keys" ~/.ssh/load_keys
-}
-
-fill_bash_profile() {
-  if [ -f ~/.bash_profile ]; then
-    cat ~/.bash_profile > ~/.bash_profile.bkp;
-    cat ~/.bash_profile ${DOT_FILES}/bash_profile > ~/.bash_profile
-  else
-    ln -s "${DOT_FILES}/bash_profile" ~/.bash_profile
-  fi
-}
-
-sync_submodule() {
-  git submodule init .
-  git submodule update
-}
+export PROJECT_PATH
+export SCRIPTS_PATH
+export UTILS_PATH
 
 main() {
-  create_vim_data
-  link_dot_files
-  fill_bash_profile
-  sync_submodule
+    # Detect the platform.
+    case "$OSTYPE" in
+        darwin*)
+            osx_script="${TARGET_SCRIPT}_osx.sh"
+            if [ -f "${osx_script}" ]; then
+                # shellcheck source=/dev/null
+                source "${osx_script}"
+                parse "$@"
+            fi
+            ;;
+
+        linux*)
+            linux_script="${TARGET_SCRIPT}_linux.sh"
+            if [ -f "${linux_script}" ]; then
+                # shellcheck source=/dev/null
+                source "${linux_script}"
+            fi
+            ;;
+
+        msys*)
+            # Load windows script?
+            ;;
+    esac
 }
 
-main
+if [ $# -eq 0 ]; then
+    # shellcheck source=/dev/null
+    . "${UTILS_PATH}/colors"
+    # shellcheck source=/dev/null
+    . "${UTILS_PATH}/menu"
+    show_help
+else
+    main "$@"
+fi;

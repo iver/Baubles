@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+# homebrew_path
+# --
+# (c) Iver!
+# Iván Jaimes <iver@iver.mx>
+# --
+# Goal: add homebrew locations to path
+
+homebrew_2_path() {
+  # homebrew
+  [ -d /opt/homebrew/bin ] && LPATH=/opt/homebrew/bin:${LPATH}
+}
+
+homebrew_2_path

@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# rust_path
+# --
+# (c) Iver!
+# Iván Jaimes <iver@iver.mx>
+# --
+# Goal: add rust locations to path
+
+rust_2_path() {
+  if [ -d ${HOME}/.cargo/bin ];
+    then LPATH=${HOME}/.cargo/bin:${PATH};
+  fi
+}
+
+rust_2_path

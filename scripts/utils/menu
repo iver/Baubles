@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# --
+# (c) Iver!
+# Iván Jaimes <ivan.iver@gmail.com>
+#
+
+set -o errexit
+set -o nounset
+
+show_help() {
+    printc "MENU" "usage:"
+    printc "MENU" ""
+    printc "MENU" "  ${0} [-options]"
+    printc "MENU" ""
+    printc "MENU" "Avaliable options:"
+    printc "MENU" ""
+    printc "MENU" '  -h/?              | show this information'
+    printc "MENU" ""
+    printc "MENU" '  -d                | install dot files'
+    printc "MENU" '  -e                | setup local development environment'
+    printc "MENU" '  -l                | list available packages'
+    printc "MENU" '  -p <package>      | install the package provided'
+    printc "MENU" '  -q                | run script in quiet mode'
+    printc "MENU" '  -t                | install testing framework for Bash'
+}
+
+

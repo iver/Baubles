@@ -10,7 +10,9 @@
 umask 0007
 
 ruby_2_path() {
-  [ -d /Users/iver/.rvm/rubies/default/bin ] && LPATH=/Users/iver/.rvm/rubies/default/bin:${PATH}
+  if [ -d ${HOME}/.rvm/rubies/default/bin ];
+    then LPATH=${HOME}/.rvm/rubies/default/bin:${PATH};
+  fi
 }
 
 ruby_2_path

@@ -1,0 +1,97 @@
+#!/usr/bin/env bash
+# --
+# (c) Iver!
+# Iván Jaimes <ivan.iver@gmail.com>
+#
+# Goals script:
+#
+#   * Contains commonly used functions
+
+get_rc_file(){
+    local RC_FILE
+
+    if [ "$SHELL" = "/bin/bash" ]; then
+        RC_FILE=~/.bash_profile
+    elif [ "$SHELL" = "/bin/zsh" ]; then
+        RC_FILE=~/.zshrc
+    else
+        echo "unknown shell: $SHELL"
+        exit 1
+    fi
+    echo "${RC_FILE}"
+}
+
+create_if_not_exist() {
+    local FILE=$1
+    echo "${FILE}"
+    [ ! -f "${FILE}" ] && touch "${FILE}"
+    return 0
+}
+
+add_to_dot_file(){
+    local LINE=$1
+    local RC_FILE=""
+    RC_FILE=$(get_rc_file)
+    create_if_not_exist "${RC_FILE}"
+
+    if ! grep -q "${LINE}" "${RC_FILE}"; then
+        echo "${LINE}" >> "${RC_FILE}"
+        # also source the line immediately
+        eval "${LINE}"
+        return 1;
+    fi
+    return 0;
+}
+
+set_options_variables() {
+    # Reset in case getopts has been used previously in the shell.
+    OPTIND=1
+
+    while getopts "h?delqtup:" opt; do
+        case "$opt" in
+            h|\?)
+                SHOW_HELP=1
+                export SHOW_HELP
+                ;;
+            d)  DOT_FILES=1
+                export DOT_FILES
+                ;;
+            e)  LOCAL_ENV=1
+                export LOCAL_ENV
+                ;;
+            l)  LIST=1
+                export LIST
+                ;;
+            q)  VERBOSE=0
+                export VERBOSE
+                ;;
+            p)  INSTALL=1
+                PACKAGE=${OPTARG}
+                export INSTALL
+                export PACKAGE
+                ;;
+            t) TESTING=1
+               export TESTING
+               ;;
+            u) UNINSTALL=1
+               export UNINSTALL
+               ;;
+        esac
+    done
+}
+
+contains() {
+    local seeking=$1
+    shift
+    local array=("$@")
+    local in=1
+    for element in "${array[@]}"; do
+        if [[ $element == "$seeking" ]]; then
+            in=0
+            break
+        fi
+    done
+    return $in
+}
+
+

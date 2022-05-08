@@ -1,17 +1,19 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# --
+# (c) Iver!
+# Iván Jaimes <ivan.iver@gmail.com>
+#
+
+set -o errexit
+set -o nounset
+set -o pipefail
 
 [ $USER == "root" ] && echo "You should not install this for the root account." && exit 1
 
-export CURRENT=${HOME}/Config
+PROJECT_PATH=$(pwd)
+SCRIPTS_PATH="${PROJECT_PATH}/scripts"
+UTILS_PATH="${SCRIPTS_PATH}/utils"
 
-if [ -d ~/.vim ]; then
-  rm -rf ~/.vim;
-  rm ~/.vimrc;
-fi
-
-unlink ${HOME}/.gitconfig
-unlink ${HOME}/.gitignore_global
-unlink ${HOME}/.bash_profile
-unlink ${HOME}/.tmux.conf
-unlink ${HOME}/.nanorc
-unlink ${HOME}/.ctags
+# shellcheck source=/dev/null
+. "${UTILS_PATH}/dot_functions"
+remove_dot_files

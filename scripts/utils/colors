@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+
+# Goals script:
+#
+#   * Set color environment variables.
+#   * Provide logger functions (INFO|WARNING|ERROR|DEBUG).
+
+export CLTYPE="\033"
+
+export  NC="${CLTYPE}[0m"        # Text Reset
+export  BLACK="${CLTYPE}[0;30m"  # Black - Regular
+export  RED="${CLTYPE}[0;31m"    # Red
+export  GREEN="${CLTYPE}[0;32m"  # Green
+export  YELLOW="${CLTYPE}[0;33m" # Yellow
+export  BLUE="${CLTYPE}[0;34m"   # Blue
+export  PURPLE="${CLTYPE}[0;35m" # Purple
+export  CYAN="${CLTYPE}[0;36m"   # Cyan
+export  WHITE="${CLTYPE}[0;37m"  # White
+export  BOLD="${CLTYPE}[2;30m"   # Black - Bold
+
+printc() {
+    case "$1" in
+        INFO)
+            echo -e "${CYAN}[INFO]  ${NC} $2";
+            ;;
+        WARNING)
+            echo -e "${YELLOW}[WARN]  ${NC} $2";
+            ;;
+        ERROR)
+            echo -e "${RED}[ERROR] ${NC} $2";
+            ;;
+        DEBUG)
+            echo -e "${PURPLE}[DEBUG] ${NC} $2";
+            ;;
+        STATUS)
+            echo -e "${CYAN}[$3]  ${NC} $2 ";
+            ;;
+        LOGO)
+            echo -e "${CYAN}${2}" "${NC}";
+            ;;
+        CMD)
+            echo -e "${CYAN}${2}" "${NC}";
+            ;;
+        SUB)
+            echo -e "${GREEN}${2}" "${NC}";
+            ;;
+        MENU)
+            echo -e "${WHITE} $2" "${NC}";
+            ;;
+        TIT)
+            echo -e "${YELLOW}$2" "${NC}";
+            ;;
+        *)
+            echo -e "${RED}ERROR${NC} Usage ${YELLOW}pcolor(${NC}INFO|WARNING|ERROR, MESSAGE ${YELLOW})${NC}" 1>&2;
+            ;;
+    esac
+}
+

@@ -7,8 +7,12 @@
 # --
 # Goal: add postgres locations to path
 
+PSQL_VERSION="@10"
+
 postgres_2_path() {
-  [ -d /usr/local/opt/postgresql@10/bin ] && LPATH=/usr/local/opt/postgresql@10/bin:${LPATH}
+  if [ -d /usr/local/opt/postgresql${PSQL_VERSION}/bin ];
+    then LPATH=/usr/local/opt/postgresql${PSQL_VERSION}/bin:${LPATH}
+  fi
 }
 
 postgres_2_path
