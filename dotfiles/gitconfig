@@ -19,13 +19,13 @@
 [apply]
   whitespace = warn
 [core]
-	excludesfile = /Users/iver/.gitignore_global
+	excludesfile = ~/.gitignore_global
 	quotepath = off
 	editor = vim
   pager = delta
 [user]
-	name = Ivan Jaimes
-	email = ivan.jaimes@iver.mx
+	name = 
+	email = 
 [color]
   diff = auto
   status = auto
