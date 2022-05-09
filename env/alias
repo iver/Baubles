@@ -38,3 +38,5 @@ alias fpm-start='launchctl load -w /usr/local/opt/php56/homebrew.mxcl.php56.plis
 alias fpm-stop='launchctl unload /usr/local/opt/php56/homebrew.mxcl.php56.plist'
 
 alias purgeallbuilds='rm -rf ~/Library/Developer/Xcode/DerivedData/*'
+
+alias vim='/opt/homebrew/bin/vim'

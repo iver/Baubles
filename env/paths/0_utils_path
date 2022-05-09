@@ -10,6 +10,15 @@
 utils_2_path() {
   # unzip
   [ -d /opt/homebrew/opt/unzip/bin ] && LPATH=/opt/homebrew/opt/unzip/bin:${LPATH}
+  # sqlite
+  if [ -d /opt/homebrew/opt/sqlite/bin ]; then
+    LPATH=/opt/homebrew/opt/sqlite/bin:${LPATH}
+    export PKG_CONFIG_PATH="/opt/homebrew/opt/sqlite/lib/pkgconfig";
+  fi
+
+  [ -d /opt/homebrew/opt/bzip2/bin ] && LPATH=/opt/homebrew/opt/bzip2/bin:${LPATH}
+  [ -d /opt/homebrew/opt/openssl@3/bin ] && LPATH=/opt/homebrew/opt/openssl@3/bin:${LPATH}
+  [ -d /opt/homebrew/opt/bzip2/bin ] && LPATH=/opt/homebrew/opt/bzip2/bin:${LPATH}
 }
 
 utils_2_path
