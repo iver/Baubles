@@ -13,6 +13,7 @@ create_profile() {
     if [ -f ~/.bash_profile ]; then
         cat ~/.bash_profile > ~/.bash_profile.bkp;
         cp ${DOT_FILES}/iver_profile > ~/.iver_profile
+        # TODO: Add .iver_profile to .bash_profile
     else
         ln -s "${DOT_FILES}/iver_profile" ~/.bash_profile
     fi

@@ -11,8 +11,8 @@
 umask 0007
 
 variables() {
-  export HOSTNAME=`hostname`
-  export MYHOST=`hostname | sed -e "s/\..*//g"`
+  export HOSTNAME=$(hostname)
+  export MYHOST=$(hostname | sed -e "s/\..*//g")
   export TTYTYPE="TERM"
 
   export LANG="en_US.UTF-8"
@@ -20,6 +20,7 @@ variables() {
   # history file
   export HISTSIZE=1500
   export HISTCONTROL=ignoredups
+  export HISTTIMEFORMAT="%d/%m/%y %T "
   # export MANPATH=$HOME/manuals:$MANPATH
 
   export CLICOLOR=1
@@ -29,10 +30,8 @@ variables() {
 }
 
 colors(){
-  # Type of SO
   CLTYPE="\e"
-  [ "${APSYSO}" = "HP-UX" ] && CLTYPE="\033"
-
+  
   # terminal line settings
   stty 2> /dev/null > /dev/null
   if [ "$?" = "0" ]
@@ -93,33 +92,41 @@ colors(){
 }
 
 cmdstyle () {
+  get_id_address
+  # Cursor and profile
   export PS1="\e]1;${MYIP}\a\e]2;${MYIP}:${MYHOST}\a\
       \n\[${CRESET}\][\[${TXTYLW}\]${MYIP}\[${CRESET}\](${MYHOST})]:\[${TXTRED}\]\[${TXTWHT}\] \w \
       \n\[${TXTCYN}\]${USER}\[${TXTRED}\]\$(__git_ps1)\[${CRESET}\] \$> "
   export PS2=" ..> "
+  # Bash documentation says for "checkwinsize" attribute:
+  # "Bash checks the window size after each command and, 
+  # if necessary, updates the values of LINES and COLUMNS."
   shopt -s checkwinsize
 }
 
-variables
-colors
+get_id_address(){
+  # get IP Address
+  IFACE=en0
 
-unset USERNAME
+  # MYIP=`ping -c1 ${HOSTNAME} | awk '/icmp_/{print $0}' | sed 's/^.*[^0-9]\([0-9]*\.[0-9]*\.[0-9]*\.[0-9]*\).*$/\1/'`
+  MYIP=$(ipconfig getifaddr ${IFACE})
+  if [ -z "$MYIP" -o "$MYIP" = "127.0.0.1" ]
+  then
+  #  MYIP=`ifconfig ${IFACE} | awk '/inet:/{print $2}' | sed 's/^.*[^0-9]\([0-9]*\.[0-9]*\.[0-9]*\.[0-9]*\).*$/\1/'`
+    MYIP=`ifconfig ${IFACE}  | grep 'broadcast' | awk '{ print $2}'`
+  fi
+}
 
-# get IP Address
-# TODO: Detect interface dynamically
-IFACE=en0
+read_host_env() {
+  # specific host enviroment
+  [ -s ~/${HOSTNAME}.profile ] && . ~/${HOSTNAME}.profile > /dev/null 2>&1
+}
 
-# MYIP=`ping -c1 ${HOSTNAME} | awk '/icmp_/{print $0}' | sed 's/^.*[^0-9]\([0-9]*\.[0-9]*\.[0-9]*\.[0-9]*\).*$/\1/'`
-MYIP=$(ipconfig getifaddr ${IFACE})
-if [ -z "$MYIP" -o "$MYIP" = "127.0.0.1" ]
-then
-#  MYIP=`ifconfig ${IFACE} | awk '/inet:/{print $2}' | sed 's/^.*[^0-9]\([0-9]*\.[0-9]*\.[0-9]*\.[0-9]*\).*$/\1/'`
-   MYIP=`ifconfig ${IFACE}  | grep 'broadcast' | awk '{ print $2}'`
-fi
+main() {
+  variables
+  colors
+  unset USERNAME
+  cmdstyle
+}
 
-# specific host enviroment
-[ -s ~/${HOSTNAME}.profile ] && . ~/${HOSTNAME}.profile > /dev/null 2>&1
-
-# Cursor and profile
-cmdstyle
-
+main

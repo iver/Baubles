@@ -9,7 +9,7 @@
 
 rust_2_path() {
   if [ -d ${HOME}/.cargo/bin ];
-    then LPATH=${HOME}/.cargo/bin:${PATH};
+    then export LPATH=${HOME}/.cargo/bin:${LPATH};
   fi
 }
 

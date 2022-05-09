@@ -8,7 +8,7 @@
 # Goal: add mysql locations to path
 
 mysql_2_path() {
-  [ -d /usr/local/mysql/bin ] && LPATH=/usr/local/mysql/bin:${LPATH}
+  [ -d /usr/local/mysql/bin ] && export LPATH=/usr/local/mysql/bin:${LPATH}
 }
 
 mysql_2_path

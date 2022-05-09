@@ -11,7 +11,7 @@ java_2_path() {
   local J_VERSION
   J_VERSION="1.7.0_17"
   if [ -d /opt/jre${J_VERSION}/bin ]; then
-    LPATH=/opt/jre${J_VERSION}/bin:${LPATH}
+    export LPATH=/opt/jre${J_VERSION}/bin:${LPATH}
   fi
 }
 

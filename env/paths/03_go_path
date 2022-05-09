@@ -7,12 +7,25 @@
 # --
 # Goal: add go locations to path
 
+add_go_root() {
+  if [ -L /usr/local/golang/go ]; then
+    export GOROOT=/usr/local/golang/go
+    [ -d ${GOROOT}/bin ] && export LPATH=${GOROOT}/bin:${LPATH}
+  fi
+}
+
+add_go_workspace() {
+  if [ -d ${HOME}/Workspace/go ]; then
+    export GOPATH=${HOME}/Workspace/go
+    [ -d ${GOPATH}/bin ] && export GOBIN=${GOPATH}/bin && export LPATH=${GOBIN}:${LPATH}
+  fi
+}
+
 go_2_path() {
-  [ -d /usr/local/golang/go ] && export GOROOT=/usr/local/golang/go
-  [ -d ${HOME}/Workspace/go ] && export GOPATH=${HOME}/Workspace/go
-  [ -d ${GOPATH}/bin ] && export GOBIN=${GOPATH}/bin
-  [ -d ${GOROOT}/bin ] && export LPATH=${GOROOT}/bin
-  LPATH=${LPATH}:${GOBIN}
+  if [ -d /usr/local/golang/ ]; then
+    add_go_root
+    add_go_workspace
+  fi
 }
 
 go_2_path

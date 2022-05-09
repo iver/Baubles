@@ -1,20 +1,33 @@
 #!/usr/bin/env bash
-
 # pathrc
 # --
 # (c) Iver!
 # Iván Jaimes <iver@iver.mx>
 # --
 # Goal: load the files from the paths of the available languages
-LPATH=${PATH}
+
+# set -o errexit
+set -o nounset
+set -o pipefail
+
+PATH_SAVED=${PATH}
 
 load_file_path() {
-  for path_file in $(ls 0*); do
+  PATH_2_READ="$1"
+  for path_file in $(ls ${PATH_2_READ}/0*); do
     source ${path_file}
+
   done
 }
 
-load_file_path
+main(){
+  PATH_2_READ="$1"
+  local LPATH
+  LPATH=""
 
-LPATH=.:${LPATH}
-PATH=${LPATH}
+  load_file_path ${PATH_2_READ}
+  
+  PATH=.:${PATH_SAVED}:${LPATH}
+}
+
+main "$@"

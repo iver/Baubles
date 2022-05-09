@@ -11,7 +11,7 @@ PSQL_VERSION="@10"
 
 postgres_2_path() {
   if [ -d /usr/local/opt/postgresql${PSQL_VERSION}/bin ];
-    then LPATH=/usr/local/opt/postgresql${PSQL_VERSION}/bin:${LPATH}
+    then export LPATH=/usr/local/opt/postgresql${PSQL_VERSION}/bin:${LPATH}
   fi
 }
 

@@ -30,6 +30,7 @@ export PKGS_AVAILABLE=(
     "redis"
     "mysql"
     "shellcheck"
+    "unzip"
 )
 export UNINSTALL=0
 

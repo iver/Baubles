@@ -1,4 +1,8 @@
-#!/bin/sh
+#!/usr/bin/env bash
+# --
+# (c) Iver!
+# Iván Jaimes <ivan.iver@gmail.com>
+#
 
 # common alias
 alias l="ls"

@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+# homebrew_path
+# --
+# (c) Iver!
+# Iván Jaimes <iver@iver.mx>
+# --
+# Goal: add homebrew locations to path
+
+utils_2_path() {
+  # unzip
+  [ -d /opt/homebrew/opt/unzip/bin ] && LPATH=/opt/homebrew/opt/unzip/bin:${LPATH}
+}
+
+utils_2_path
