@@ -12,11 +12,12 @@ set -o errexit
 set -o nounset
 
 GO_VERSION="1.18.1"
-TARGET_PATH="/usr/local/go${GO_VERSION}"
+BASE_PATH=/usr/local/golang
+TARGET_PATH="${BASE_PATH}/go${GO_VERSION}"
 
 request_auth() {
     if [ "$EUID" != 0 ]; then
-        echo "Privileges are required to run the installation."
+        echo "Privileges are required to run the installation. ${USER}"
         exec sudo "$0" "${USER}"
         exit "$?"
     fi
@@ -32,20 +33,22 @@ get_golang() {
 }
 
 authorize_access() {
-    chown -R ${CONTEXT_USER}:wheel ${TARGET_PATH}
+    chown -R ${CONTEXT_USER}:wheel ${BASE_PATH}
 }
 
 link_binary() {
-    [ -f /usr/local/go ] && unlink /usr/local/go && echo "listo"
-    ln -sf ${TARGET_PATH}/go /usr/local/
+    [ -f ${BASE_PATH}/go ] && unlink ${BASE_PATH}/go && echo "listo"
+    ln -sf ${TARGET_PATH}/go ${BASE_PATH}/
 }
 
 main() {
     export CONTEXT_USER="${1:-}"
+
     request_auth
     get_golang
     authorize_access
     link_binary
+    authorize_access
 }
 
 main "$@"
