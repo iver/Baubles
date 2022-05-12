@@ -13,6 +13,7 @@ java_2_path() {
   if [ -d /opt/jre${J_VERSION}/bin ]; then
     export LPATH=/opt/jre${J_VERSION}/bin:${LPATH}
   fi
+  [ -d /opt/homebrew/opt/openjdk@11/bin ] && export LPATH=/opt/homebrew/opt/openjdk@11/bin:${LPATH}
 }
 
 java_2_path

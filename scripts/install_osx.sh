@@ -31,6 +31,13 @@ export PKGS_AVAILABLE=(
     "mysql"
     "shellcheck"
     "unzip"
+    "ethereum"
+    "helm"
+    "kind"
+    "tilt"
+    "tilt-dev/tap/ctlptl"
+    "openvpn"
+    "wget"
 )
 export UNINSTALL=0
 
@@ -120,6 +127,13 @@ install_asdf() {
     fi
 }
 
+install_ethereum() {
+    pcolor "STATUS" "adding ethereum tap" "Start "
+    brew tap ethereum/ethereum
+    pcolor "STATUS" "adding ethereum tap" "Done  "
+    brew_install ethereum
+}
+
 install_docker() {
     if [ -x "$(command -v docker)" ]; then
         pcolor "STATUS" "docker is installed" "Skip  "
@@ -146,6 +160,15 @@ install() {
     printc "STATUS" "Installation" "DONE  "
 
     exit $?;
+}
+
+install_extra(){
+    install_docker
+    brew_install tilt-dev/tap/ctlptl
+    brew_install kind
+    brew_install tilt
+    brew_install helm
+    brew_install kubectl
 }
 
 install_testing_bash() {
@@ -195,7 +218,7 @@ parse() {
 
     [[ $LIST -eq 1 ]] && show_packages && exit 0;
 
-    [[ $LOCAL_ENV -eq 1 ]] && install && exit 0;
+    [[ $LOCAL_ENV -eq 1 ]] && install_extra && exit 0;
     
     [[ $INSTALL -eq 1 ]] && install_package "${PACKAGE}" && exit 0;
     
