@@ -19,6 +19,7 @@ utils_2_path() {
   [ -d /opt/homebrew/opt/bzip2/bin ] && LPATH=/opt/homebrew/opt/bzip2/bin:${LPATH}
   [ -d /opt/homebrew/opt/openssl@3/bin ] && LPATH=/opt/homebrew/opt/openssl@3/bin:${LPATH}
   [ -d /opt/homebrew/opt/bzip2/bin ] && LPATH=/opt/homebrew/opt/bzip2/bin:${LPATH}
+  [ -d /usr/local/sbin ] && LPATH=/usr/local/sbin:${LPATH}
 }
 
 utils_2_path

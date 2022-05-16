@@ -10,6 +10,7 @@
 homebrew_2_path() {
   # homebrew
   [ -d /opt/homebrew/bin ] && LPATH=/opt/homebrew/bin:${LPATH}
+  [ -d /usr/local/Homebrew/bin/ ] && LPATH=/usr/local/Homebrew/bin:${LPATH}
 }
 
 homebrew_2_path
