@@ -19,6 +19,12 @@ DOT_FILES="${CONF_FILES}/dotfiles"
 PATH_FILES="${CONF_FILES}/env/paths"
 UTILS_PATH="${CONF_FILES}/scripts/utils"
 
+export CONF_FILES
+export ENV_FILES
+export DOT_FILES
+export PATH_FILES
+export UTILS_PATH
+
 load_env_files() {
   # shellcheck source=/dev/null
   . "${ENV_FILES}/env"
@@ -27,7 +33,7 @@ load_env_files() {
   # shellcheck source=/dev/null
   . "${PATH_FILES}/pathrc" "${PATH_FILES}"
   # shellcheck source=/dev/null
-  . "${ENV_FILES}/git/git-completion.bash"
+  # . "${ENV_FILES}/git/git-completion.bash"
   # shellcheck source=/dev/null
   source ${ENV_FILES}/git/git-prompt.sh
 }
@@ -42,6 +48,7 @@ load_ssh_keys() {
 
 brew_autocomplete() {
   if type brew 2&>/dev/null; then
+    # shellcheck source=/dev/null
     source "$(brew --prefix)/etc/bash_completion.d/*"
   else
     echo "run: brew install git bash-completion"
@@ -54,21 +61,28 @@ pyenv_init() {
 
 google_sdk_init() {
   # The next line updates PATH for the Google Cloud SDK.
-  if [ -f '/Users/iver/Google/google-cloud-sdk/path.bash.inc' ]; 
-    then . '/Users/iver/Google/google-cloud-sdk/path.bash.inc'; 
+  if [ -f '/Users/iver/Google/google-cloud-sdk/path.bash.inc' ];
+    then
+      # shellcheck source=/dev/null
+      . '/Users/iver/Google/google-cloud-sdk/path.bash.inc';
   fi
 
   # The next line enables shell command completion for gcloud.
   if [ -f '/Users/iver/Google/google-cloud-sdk/completion.bash.inc' ];
-    then . '/Users/iver/Google/google-cloud-sdk/completion.bash.inc'; 
+    then
+      # shellcheck source=/dev/null
+      . '/Users/iver/Google/google-cloud-sdk/completion.bash.inc';
   fi
 }
 
 nvm_init() {
-  export NVM_DIR="$(brew --prefix nvm)"
+  NVM_DIR="$(brew --prefix nvm)"
+  export NVM_DIR
   # loads nvm
+  # shellcheck source=/dev/null
   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
   # loads nvm bash_completion
+  # shellcheck source=/dev/null
   [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 }
 
@@ -77,6 +91,8 @@ powerline_init() {
   powerline-daemon -q
   POWERLINE_BASH_CONTINUATION=1
   POWERLINE_BASH_SELECT=1
+  export POWERLINE_BASH_CONTINUATION
+  export POWERLINE_BASH_SELECT
 
   # . ${HOME}/.local/lib/python3.7/site-packages/powerline/bindings/bash/powerline.sh
   #. ${HOME}/Library/Python/3.8/lib/python/site-packages/powerline/bindings/bash/powerline.sh
@@ -90,8 +106,10 @@ asdf_init() {
   local ASDF_PATH
   ASDF_PATH="$(brew --prefix asdf)"
 
-  . ${ASDF_PATH}/libexec/asdf.sh
-  . ${ASDF_PATH}/etc/bash_completion.d/asdf.bash
+  # shellcheck source=/dev/null
+  . "${ASDF_PATH}/libexec/asdf.sh"
+  # shellcheck source=/dev/null
+  . "${ASDF_PATH}/etc/bash_completion.d/asdf.bash"
 }
 
 main() {
@@ -106,6 +124,7 @@ main() {
   asdf_init
 
   if [ -f ~/.profile ]; then
+    # shellcheck source=/dev/null
     . ~/.profile
   fi
 }
