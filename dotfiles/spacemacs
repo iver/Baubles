@@ -64,9 +64,8 @@ values."
      (ruby :variables
            ruby-enable-ruby-on-rails-support t)
      (osx :variables
-          osx-use-option-as-meta nil
-          osx-dictionary-dictionary-choice "English"
-          )
+          osx-use-option-as-meta 'none
+          osx-dictionary-dictionary-choice "English")
      (shell :variables
             shell-default-shell 'eshell
             shell-default-position 'bottom
@@ -133,21 +132,16 @@ values."
    ;; use different package directories for different Emacs versions, set this
    ;; to `emacs-version'.
    dotspacemacs-elpa-subdirectory nil
-   ;;(custom-set-variables
+   ;;
+   (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(evil-want-Y-yank-to-eol nil)
  '(package-selected-packages
-   '(ac-alchemist sqlfmt spacemacs-purpose-popwin org-super-star tex zoom-frm spacemacs-whitespace-cleanup spacemacs-theme spaceline-config nyan-mode info+ image-mode ido-vertical-mode hide-comnt help-fns+ helm-spacemacs-help helm-spacemacs-faq go-rename docker-mode dired-x centered-cursor-mode hybrid-mode holy-mode evil-evilified-state define-word font-lock yaml-mode xterm-color ws-butler winum which-key web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package toc-org tagedit spaceline smeargle slim-mode shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe reveal-in-osx-finder restart-emacs rbenv rake rainbow-mode rainbow-identifiers rainbow-delimiters pug-mode popwin persp-mode pbcopy paradox osx-trash osx-dictionary orgit org-bullets open-junk-file ob-elixir nginx-mode neotree multi-term move-text mmm-mode minitest markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode linum-relative link-hint launchctl js2-refactor js-doc indent-guide imenu-list hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio go-guru go-eldoc gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md fuzzy flycheck-pos-tip flycheck-credo flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help erlang emmet-mode elm-mode elisp-slime-nav dumb-jump dockerfile-mode docker diminish diff-hl dactyl-mode company-web company-statistics company-go column-enforce-mode color-identifiers-mode coffee-mode clean-aindent-mode chruby bundler auto-yasnippet auto-highlight-symbol auto-compile alchemist aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell lv reformatter transient tablist json-mode docker-tramp json-snatcher json-reformat memoize skewer-mode simple-httpd multiple-cursors js2-mode codeschool-theme lsp-mode auto-complete-exuberant-ctags auto-complete-rst doom-themes powerline pcre2el spinner markdown-mode hydra parent-mode projectile request haml-mode gitignore-mode fringe-helper git-gutter+ git-gutter pos-tip flycheck-mix flycheck flx magit magit-popup git-commit with-editor smartparens iedit anzu evil goto-chg undo-tree highlight f web-completion-data inf-ruby bind-map bind-key yasnippet packed s company dash elixir-mode pkg-info epl helm avy helm-core async auto-complete popup go-mode go-autocomplete go-autoloads all-the-icons doom-modeline company-tern)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-)  ;; One of `vim', `emacs' or `hybrid'.
+   '(ac-alchemist sqlfmt spacemacs-purpose-popwin org-super-star tex zoom-frm spacemacs-whitespace-cleanup spacemacs-theme spaceline-config nyan-mode info+ image-mode ido-vertical-mode hide-comnt help-fns+ helm-spacemacs-help helm-spacemacs-faq go-rename docker-mode dired-x centered-cursor-mode hybrid-mode holy-mode evil-evilified-state define-word font-lock yaml-mode xterm-color ws-butler winum which-key web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package toc-org tagedit spaceline smeargle slim-mode shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe reveal-in-osx-finder restart-emacs rbenv rake rainbow-mode rainbow-identifiers rainbow-delimiters pug-mode popwin persp-mode pbcopy paradox osx-trash osx-dictionary orgit org-bullets open-junk-file ob-elixir nginx-mode neotree multi-term move-text mmm-mode minitest markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode linum-relative link-hint launchctl js2-refactor js-doc indent-guide imenu-list hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio go-guru go-eldoc gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md fuzzy flycheck-pos-tip flycheck-credo flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help erlang emmet-mode elm-mode elisp-slime-nav dumb-jump dockerfile-mode docker diminish diff-hl dactyl-mode company-web company-statistics company-go column-enforce-mode color-identifiers-mode coffee-mode clean-aindent-mode chruby bundler auto-yasnippet auto-highlight-symbol auto-compile alchemist aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell lv reformatter transient tablist json-mode docker-tramp json-snatcher json-reformat memoize skewer-mode simple-httpd multiple-cursors js2-mode codeschool-theme lsp-mode auto-complete-exuberant-ctags auto-complete-rst doom-themes powerline pcre2el spinner markdown-mode hydra parent-mode projectile request haml-mode gitignore-mode fringe-helper git-gutter+ git-gutter pos-tip flycheck-mix flycheck flx magit magit-popup git-commit with-editor smartparens iedit anzu evil goto-chg undo-tree highlight f web-completion-data inf-ruby bind-map bind-key yasnippet packed s company dash elixir-mode pkg-info epl helm avy helm-core async auto-complete popup go-mode go-autocomplete go-autoloads all-the-icons doom-modeline company-tern))
+   ;; One of `vim', `emacs' or `hybrid'.
    ;; `hybrid' is like `vim' except that `insert state' is replaced by the
    ;; `hybrid state' with `emacs' key bindings. The value can also be a list
    ;; with `:variables' keyword (similar to layers). Check the editing styles
@@ -360,7 +354,7 @@ values."
    ;; delete only whitespace for changed lines or `nil' to disable cleanup.
    ;; (default nil)
    dotspacemacs-whitespace-cleanup nil)
-)
+))
 
 (defun dotspacemacs/user-init ()
   "Initialization function for user code.
