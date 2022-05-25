@@ -22,22 +22,43 @@ export TESTING=0
 export PACKAGE=""
 export PKGS_AVAILABLE=(
     "asdf"
+    "ag"
+    "automake"
+    "bash-git-prompt"
     "bats-assert"
     "bats-core"
     "bats-file"
+    "coreutils"
+    "ctags"
+    "delta"
     "gpg"
+    "gs"
     "postgres"
     "redis"
     "mysql"
     "shellcheck"
     "unzip"
     "ethereum"
+    "fop"
     "helm"
+    "imagemagick"
     "kind"
+    "libtool"
     "tilt"
     "tilt-dev/tap/ctlptl"
     "openvpn"
+    "openjdk"
+    "pyenv"
+    "rar"
+    "readline"
+    "sqlite3"
+    "socat"
+    "ripgrep"
     "wget"
+    "xz"
+    "zlib"
+    "wxwidgets"
+    # automake libyaml readline libxslt libtool unixodbc unzip curl
 )
 export UNINSTALL=0
 
@@ -51,8 +72,8 @@ dot_files() {
     DOT_FILES="${PROJECT_PATH}/dotfiles"
     # shellcheck source=/dev/null
     . "${UTILS_PATH}/dot_functions"
-    link_dot_files ${DOT_FILES}
-    create_profile ${DOT_FILES}
+    link_dot_files "${DOT_FILES}"
+    create_profile "${DOT_FILES}"
 }
 
 remove_dot_files() {
@@ -228,7 +249,7 @@ parse() {
 
     [[ $UNINSTALL -eq 1 ]] && remove_dot_files && exit 0;
     
-    illegal_option_msg
+    illegal_option_msg "$@"
 
 }
 
