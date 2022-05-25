@@ -36,6 +36,8 @@ load_env_files() {
   # . "${ENV_FILES}/git/git-completion.bash"
   # shellcheck source=/dev/null
   source ${ENV_FILES}/git/git-prompt.sh
+  # shellcheck source=/dev/null
+  source ~/.fonts/*.sh
 }
 
 load_ssh_keys() {
@@ -56,7 +58,10 @@ brew_autocomplete() {
 }
 
 pyenv_init() {
-  eval "$(pyenv init -)"
+  eval "$(pyenv init --path)"
+  if command -v pyenv 1>/dev/null 2>&1; then
+    eval "$(pyenv init -)"
+  fi
 }
 
 google_sdk_init() {
@@ -112,6 +117,12 @@ asdf_init() {
   . "${ASDF_PATH}/etc/bash_completion.d/asdf.bash"
 }
 
+vim_alias() {
+  if (command -v brew && brew list --formula | grep -c vim ) > /dev/null 2>&1; then
+    alias vim="$(brew --prefix vim)/bin/vim"
+  fi
+}
+
 main() {
   load_env_files
   load_ssh_keys
@@ -122,6 +133,7 @@ main() {
   # powerline_init
   # direnv_init
   asdf_init
+  vim_alias
 
   if [ -f ~/.profile ]; then
     # shellcheck source=/dev/null

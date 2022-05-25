@@ -18,8 +18,10 @@ utils_2_path() {
 
   [ -d /opt/homebrew/opt/bzip2/bin ] && LPATH=/opt/homebrew/opt/bzip2/bin:${LPATH}
   [ -d /opt/homebrew/opt/openssl@3/bin ] && LPATH=/opt/homebrew/opt/openssl@3/bin:${LPATH}
-  [ -d /opt/homebrew/opt/bzip2/bin ] && LPATH=/opt/homebrew/opt/bzip2/bin:${LPATH}
   [ -d /usr/local/sbin ] && LPATH=/usr/local/sbin:${LPATH}
+  # Erlang 24
+  [ -d /opt/homebrew/opt/erlang@24/bin ] && LPATH=/opt/homebrew/opt/erlang@24/bin:${LPATH}
+  [ -d /opt/homebrew/opt/node@12/bin ] && LPATH=/opt/homebrew/opt/node@12/bin:${LPATH}
 }
 
 utils_2_path

@@ -5,6 +5,9 @@
 # Iván Jaimes <iver@iver.mx>
 # --
 # Goal: load the files from the paths of the available languages
+#
+# Checkout System Path Ordering
+# echo -e ${PATH//:/\\n}
 
 # set -o errexit
 set -o nounset
@@ -15,8 +18,8 @@ PATH_SAVED=${PATH}
 load_file_path() {
   PATH_2_READ="$1"
   for path_file in $(ls ${PATH_2_READ}/0*); do
-    source ${path_file}
-
+    # shellcheck source=/dev/null
+    . "${path_file}"
   done
 }
 
@@ -25,9 +28,9 @@ main(){
   local LPATH
   LPATH=""
 
-  load_file_path ${PATH_2_READ}
+  load_file_path "${PATH_2_READ}"
   
-  PATH=.:${PATH_SAVED}:${LPATH}
+  PATH=.:${LPATH}:${PATH_SAVED}
 }
 
 main "$@"
