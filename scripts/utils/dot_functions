@@ -8,11 +8,11 @@
 #   * Group functions related to dot files
 
 create_profile() {
-    dot_files="$1"
+    DOT_FILES="$1"
 
     if [ -f ~/.bash_profile ]; then
         cat ~/.bash_profile > ~/.bash_profile.bkp;
-        cp ${DOT_FILES}/iver_profile > ~/.iver_profile
+        cp "${DOT_FILES}/iver_profile" ~/.iver_profile
         # TODO: Add .iver_profile to .bash_profile
     else
         ln -s "${DOT_FILES}/iver_profile" ~/.bash_profile
@@ -45,16 +45,16 @@ link_dot_files() {
 }
 
 remove_dot_files() {
-    [ -f ~/.ctags ] && unlink ${HOME}/.ctags
-    [ -f ~/.gitconfig ] && unlink ${HOME}/.gitconfig
-    [ -f ~/.gitignore_global ] && unlink ${HOME}/.gitignore_global
-    [ -f ~/.iex.exs ] && unlink ${HOME}/.iex.exs
-    [ -f ~/.nanorc ] && unlink ${HOME}/.nanorc
-    [ -f ~/.psqlrc ] && unlink ${HOME}/.psqlrc
-    [ -f ~/.spacemacs ] && unlink ${HOME}/.spacemacs
-    [ -f ~/.tmux.conf ] && unlink ${HOME}/.tmux.conf
+    [ -f ~/.ctags ] && unlink "${HOME}/.ctags"
+    [ -f ~/.gitconfig ] && unlink "${HOME}/.gitconfig"
+    [ -f ~/.gitignore_global ] && unlink "${HOME}/.gitignore_global"
+    [ -f ~/.iex.exs ] && unlink "${HOME}/.iex.exs"
+    [ -f ~/.nanorc ] && unlink "${HOME}/.nanorc"
+    [ -f ~/.psqlrc ] && unlink "${HOME}/.psqlrc"
+    [ -f ~/.spacemacs ] && unlink "${HOME}/.spacemacs"
+    [ -f ~/.tmux.conf ] && unlink "${HOME}/.tmux.conf"
     
-    [ -f ~/.bash_profile ] && unlink ${HOME}/.bash_profile
+    [ -f ~/.bash_profile ] && unlink "${HOME}/.bash_profile"
     rm -f ~/.iver_profile
 
     # if [ -d ~/.vim ]; then

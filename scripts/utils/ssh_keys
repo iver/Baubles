@@ -25,7 +25,7 @@ load_keys() {
 
     while read line; do
         case "$line" in \#*) continue ;; esac
-        /usr/bin/ssh-add ${KEYS_LOCATION}/$line
+        /usr/bin/ssh-add "${KEYS_LOCATION}/$line"
     done < $FILE_KEYS
 }
 

@@ -8,7 +8,7 @@
 # Goal: add rust locations to path
 
 rust_2_path() {
-  if [ -d ${HOME}/.cargo/bin ];
+  if [ -d "${HOME}/.cargo/bin" ];
     then export LPATH=${HOME}/.cargo/bin:${LPATH};
   fi
 }
