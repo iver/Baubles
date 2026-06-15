@@ -38,9 +38,9 @@ add_to_dot_file(){
         echo "${LINE}" >> "${RC_FILE}"
         # also source the line immediately
         eval "${LINE}"
-        return 1;
+        return 0;
     fi
-    return 0;
+    return 1;
 }
 
 set_options_variables() {

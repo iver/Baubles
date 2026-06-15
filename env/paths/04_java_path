@@ -5,27 +5,49 @@
 # (c) Iver!
 # Iván Jaimes <iver@iver.mx>
 # --
-# Goal: add java locations to path
+# Goal: Java version management via asdf
 
-java_2_path() {
-  local J_VERSION
-  J_VERSION="1.7.0_17"
-  if [ -d /opt/jre${J_VERSION}/bin ]; then
-    export LPATH=/opt/jre${J_VERSION}/bin:${LPATH}
+# Switch Java version for the current shell session.
+# Usage: java_use <version>  (e.g. java_use adoptopenjdk-11.0.16+8)
+java_use() {
+  local version="$1"
+  if [ -z "$version" ]; then
+    echo "Usage: java_use <version>"
+    echo ""
+    java_versions
+    return 1
   fi
-  [ -d /opt/homebrew/opt/openjdk@11/bin ] && export LPATH=/opt/homebrew/opt/openjdk@11/bin:${LPATH}
-
-  JAVA_8_HOME=$(/usr/libexec/java_home -v1.8)
-  JAVA_11_HOME=$(/usr/libexec/java_home -v11)
-  export JAVA_8_HOME
-  export JAVA_11_HOME
-  
-  alias java8='export JAVA_HOME=$JAVA_8_HOME'
-  alias java11='export JAVA_HOME=$JAVA_11_HOME'
+  asdf shell java "$version"
 }
 
-# java_2_path
-# default to Java 11
-# java11
+# List installed Java versions and recent LTS candidates available to install.
+java_versions() {
+  echo "Installed:"
+  asdf list java 2>/dev/null || echo "  asdf-java plugin not available"
+  echo ""
+  echo "Available (LTS: 11, 17, 21 | Latest: 24):"
+  asdf list all java 2>/dev/null \
+    | grep -E '^(temurin|adoptopenjdk|corretto|zulu|openjdk)-(11|17|21|24)\.' \
+    | tail -20
+}
 
-. ~/.asdf/plugins/java/set-java-home.bash
+# Install a Java version via asdf.
+# Usage: java_install <version>  (e.g. java_install temurin-21.0.3+9)
+java_install() {
+  local version="$1"
+  if [ -z "$version" ]; then
+    echo "Usage: java_install <version>"
+    echo ""
+    java_versions
+    return 1
+  fi
+  asdf install java "$version"
+}
+
+# Load the asdf-java plugin which auto-sets JAVA_HOME from .tool-versions
+_java_hook="${ASDF_DATA_DIR:-$HOME/.asdf}/plugins/java/set-java-home.bash"
+if [ -f "$_java_hook" ]; then
+  # shellcheck source=/dev/null
+  . "$_java_hook"
+fi
+unset _java_hook
