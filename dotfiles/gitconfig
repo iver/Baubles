@@ -19,7 +19,7 @@
 [apply]
   whitespace = warn
 [core]
-	excludesfile = ~/.gitignore_global
+	excludesfile = /Users/iver/.gitignore_global
 	quotepath = off
 	editor = vim
   pager = delta
@@ -51,7 +51,7 @@
   trustExitCode = false
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path =
+	path = 
 [mergetool "sourcetree"]
 	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
@@ -96,3 +96,5 @@
   line-numbers-left-style = blue
   line-numbers-right-style = blue
 
+[init]
+	defaultBranch = main

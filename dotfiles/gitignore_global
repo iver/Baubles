@@ -81,3 +81,7 @@ tools/db/*.sql
 tools/db/*.dump
 
 tools/bin/*
+
+0_notes/
+
+**/.claude/settings.local.json

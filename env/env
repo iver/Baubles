@@ -27,11 +27,13 @@ variables() {
   export LSCOLORS=Dxfxcxdxbxegedabagacad
   # preserve iex history
   export ERL_AFLAGS="-kernel shell_history enabled"
+
+  export PGDATABASE=postgres
 }
 
 colors(){
   CLTYPE="\e"
-  
+
   # terminal line settings
   stty 2> /dev/null > /dev/null
   if [ "$?" = "0" ]
@@ -99,7 +101,7 @@ cmdstyle () {
       \n\[${TXTCYN}\]${USER}\[${TXTRED}\]\$(__git_ps1)\[${CRESET}\] \$> "
   export PS2=" ..> "
   # Bash documentation says for "checkwinsize" attribute:
-  # "Bash checks the window size after each command and, 
+  # "Bash checks the window size after each command and,
   # if necessary, updates the values of LINES and COLUMNS."
   shopt -s checkwinsize
 }

@@ -3,11 +3,11 @@
 # (c) Iver!
 # Iván Jaimes <ivan.iver@gmail.com>
 #
-# This is a setup profile enviroment file for unix-like systems.
+# This is a setup profile environment file for unix-like systems.
 # See bash_rc or bash_profile for more information.
 
 # set -o errexit
-set -o nounset
+# set -o nounset
 set -o pipefail
 
 # export LC_ALL=en_US.UTF-8
@@ -30,6 +30,8 @@ load_env_files() {
   . "${ENV_FILES}/env"
   # shellcheck source=/dev/null
   . "${ENV_FILES}/alias"
+  # shellcheck source=/dev/null
+  . "${ENV_FILES}/alias_aws"
   # shellcheck source=/dev/null
   . "${PATH_FILES}/pathrc" "${PATH_FILES}"
   # shellcheck source=/dev/null
@@ -95,14 +97,20 @@ nvm_init() {
 
 powerline_init() {
   export PATH=$PATH:$HOME/.local/bin
+  export LC_ALL=en_US.UTF-8
   powerline-daemon -q
   POWERLINE_BASH_CONTINUATION=1
   POWERLINE_BASH_SELECT=1
+  # POWERLINE_CONFIG_COMMAND=$(which powerline-config)
+  # POWERLINE_COMMAND="$($POWERLINE_CONFIG_COMMAND shell command)"
+
+  # export POWERLINE_CONFIG_COMMAND
   export POWERLINE_BASH_CONTINUATION
   export POWERLINE_BASH_SELECT
+  # export POWERLINE_COMMAND
 
-  # . ${HOME}/.local/lib/python3.7/site-packages/powerline/bindings/bash/powerline.sh
-  #. ${HOME}/Library/Python/3.8/lib/python/site-packages/powerline/bindings/bash/powerline.sh
+  source "${HOME}/.local/lib/python3.10/site-packages/powerline/bindings/bash/powerline.sh"
+  # . ${HOME}/Library/Python/3.8/lib/python/site-packages/powerline/bindings/bash/powerline.sh
 }
 
 direnv_init() {
@@ -114,33 +122,61 @@ asdf_init() {
   ASDF_PATH="$(brew --prefix asdf)"
 
   # shellcheck source=/dev/null
-  . "${ASDF_PATH}/libexec/asdf.sh"
-  # shellcheck source=/dev/null
-  . "${ASDF_PATH}/etc/bash_completion.d/asdf.bash"
+  . "${ASDF_PATH}/etc/bash_completion.d/asdf"
 }
 
 vim_alias() {
   if (command -v brew && brew list --formula | grep -c vim ) > /dev/null 2>&1; then
-    alias vim="$(brew --prefix vim)/bin/vim"
+    alias vim='$(brew --prefix vim)/bin/vim'
   fi
+}
+
+iterm_shell_integration() {
+    ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=no
+    ITERM_SHELL_INTEGRATION_INSTALLED=Yes
+
+    export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX
+    export ITERM_SHELL_INTEGRATION_INSTALLED
+    if [ "$TERM_PROGRAM" = "iTerm.app" ]; then
+        # shellcheck source=/dev/null
+        source "${CONF_FILES}/maintenance/.iterm2_shell_integration.bash"
+    fi
 }
 
 main() {
   load_env_files
   load_ssh_keys
-  brew_autocomplete
+  # brew_autocomplete
   # pyenv_init
   google_sdk_init
   # nvm_init
-  # powerline_init
   direnv_init
   asdf_init
-  vim_alias
+  # vim_alias
+  # powerline_init
+  # iterm_shell_integration
 
   if [ -f ~/.profile ]; then
     # shellcheck source=/dev/null
     . ~/.profile
   fi
+
 }
 
-main
+main "$@"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/iver/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/iver/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/iver/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/iver/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+

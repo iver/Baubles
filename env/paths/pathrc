@@ -10,7 +10,7 @@
 # echo -e ${PATH//:/\\n}
 
 # set -o errexit
-set -o nounset
+# set -o nounset
 set -o pipefail
 
 PATH_SAVED=${PATH}
@@ -23,14 +23,22 @@ load_file_path() {
   done
 }
 
+enable_jenv() {
+    eval "$(jenv init -)"
+    jenv enable-plugin export
+    jenv enable-plugin maven
+}
+
 main(){
   PATH_2_READ="$1"
   local LPATH
   LPATH=""
 
   load_file_path "${PATH_2_READ}"
-  
+
   PATH=.:${LPATH}:${PATH_SAVED}
+
+  enable_jenv
 }
 
 main "$@"

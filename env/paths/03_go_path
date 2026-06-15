@@ -23,8 +23,24 @@ add_go_workspace() {
 
 go_2_path() {
   if [ -d /usr/local/golang/ ]; then
-    add_go_root
-    add_go_workspace
+    # add_go_root
+    # add_go_workspace
+    add_go_root_asdf
+    add_go_workspace_asdf
+  fi
+}
+
+add_go_root_asdf() {
+  if [ -L "${HOME}/go" ]; then
+    export GOROOT=${HOME}/go
+    [ -d "${GOROOT}/bin" ] && export LPATH=${GOROOT}/bin:${LPATH}
+  fi  
+}
+
+add_go_workspace_asdf(){
+  if [ -d "${HOME}/go" ]; then
+    export GOPATH=${HOME}/go
+    [ -d "${GOPATH}/bin" ] && export GOBIN=${GOPATH}/bin && export LPATH=${GOBIN}:${LPATH}
   fi
 }
 

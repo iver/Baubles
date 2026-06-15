@@ -13,4 +13,10 @@ rust_2_path() {
   fi
 }
 
+asdf_2_path() {
+  export ASDF_DATA_DIR="${HOME}/.asdf"
+  export LPATH=${ASDF_DATA_DIR}/shims:${LPATH};
+}
+
 rust_2_path
+asdf_2_path

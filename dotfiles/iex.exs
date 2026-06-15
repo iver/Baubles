@@ -1,6 +1,6 @@
 elixir_icon = ""
 
-IEx.configure [
+IEx.configure(
   colors: [
     pretty: true,
     syntax_colors: [
@@ -20,9 +20,9 @@ IEx.configure [
       regex: :light_red,
       struct: :light_white
     ],
-    eval_result: [:cyan, :bright] ,
+    eval_result: [:cyan, :bright],
     eval_error: [[:red, :bright, "\n✘ \n"]],
-    eval_info: [:yellow, :bright ],
+    eval_info: [:yellow, :bright]
   ],
   inspect: [
     limit: :infinity,
@@ -31,25 +31,32 @@ IEx.configure [
     binaries: :as_strings,
     printable_limit: :infinity
   ],
-  default_prompt: [
-    "\e[G", # cursor ⇒ column 1
-    :light_cyan,
-    "%prefix",
-    :light_magenta,
-    # custome elixir symbol; I used "". You can update at the beginnning of
-    # this config
-    " ", elixir_icon, " ",
-    :yellow, "|",
-    :light_magenta,
-    "%counter",
-    :yellow, "▶",
-    :reset
-  ] |> IO.ANSI.format |> IO.chardata_to_string
-  ]
+  default_prompt:
+    [
+      # cursor ⇒ column 1
+    #  "\e[G",
+      :light_cyan,
+      "%prefix",
+      :light_magenta,
+      # custome elixir symbol; I used "". You can update at the beginnning of
+      # this config
+      " ",
+      elixir_icon,
+      " ",
+      :yellow,
+      "|",
+      :light_magenta,
+      "%counter",
+      :yellow,
+      "▶",
+      :reset
+    ]
+    |> IO.ANSI.format()
+    |> IO.chardata_to_string()
+)
 
 #  Application.load(:tzdata)
 #  :ok = Application.ensure_started(:tzdata)
 
 # Import ecto quries for testing quries in iex
 # import_if_available(Ecto.Query)
-

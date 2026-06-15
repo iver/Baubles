@@ -22,6 +22,8 @@ utils_2_path() {
   # Erlang 24
   [ -d /opt/homebrew/opt/erlang@24/bin ] && LPATH=/opt/homebrew/opt/erlang@24/bin:${LPATH}
   [ -d /opt/homebrew/opt/node@12/bin ] && LPATH=/opt/homebrew/opt/node@12/bin:${LPATH}
+
+  [ -d /Users/iver/.local/bin ] && LPATH=/Users/iver/.local/bin:${LPATH}
 }
 
 utils_2_path

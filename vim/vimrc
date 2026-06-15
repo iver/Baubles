@@ -299,7 +299,7 @@ let g:syntastic_typescript_checkers = ['tsuquyomi'] " You shouldn't use 'tsc' ch
 " }
 
 " go {
-  let Tlist_Ctags_Cmd= '/usr/local/bin/ctags'
+  let Tlist_Ctags_Cmd= '/usr/bin/ctags'
   set rtp+=$GOPATH/src/github.com/golang/lint/misc/vim
   source ~/.vim/conf/go.vim
 " }

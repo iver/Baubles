@@ -9,6 +9,9 @@
 
 python_2_path() {
   [ -d "${HOME}/Library/Python/2.7/bin" ] && export LPATH=${HOME}/Library/Python/2.7/bin:${LPATH}
+
+  # shellcheck source=/dev/null
+  [ -d "${HOME}/.asdf/installs/python/3.10.3/bin/" ] && export LPATH=${HOME}/.asdf/installs/python/3.10.3/bin/:${LPATH}
 }
 
 python_2_path
