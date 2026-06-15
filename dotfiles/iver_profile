@@ -6,22 +6,7 @@
 # This is a setup profile environment file for unix-like systems.
 # See bash_rc or bash_profile for more information.
 
-# set -o errexit 
-set -o nounset
 set -o pipefail
-
-# export LC_ALL=en_US.UTF-8
-# export LANG=en_US.UTF-8
-
-# avoid bash error
-LAST_PWD="${LAST_PWD:+; $LAST_PWD}"
-export LAST_PWD
-EPOCHREALTIME="${EPOCHREALTIME:+; $EPOCHREALTIME}"
-export EPOCHREALTIME
-HISTIGNORE="${HISTIGNORE:+; $HISTIGNORE}"
-export HISTIGNORE
-BASH_PREEXEC_IN_ETC_BASHRC="${BASH_PREEXEC_IN_ETC_BASHRC:+; $BASH_PREEXEC_IN_ETC_BASHRC}"
-export BASH_PREEXEC_IN_ETC_BASHRC
 
 CONF_FILES=~/Config
 ENV_FILES="${CONF_FILES}/env"
@@ -108,24 +93,6 @@ nvm_init() {
   [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 }
 
-powerline_init() {
-  export PATH=$PATH:$HOME/.local/bin
-  export LC_ALL=en_US.UTF-8
-  powerline-daemon -q
-  POWERLINE_BASH_CONTINUATION=1
-  POWERLINE_BASH_SELECT=1
-  # POWERLINE_CONFIG_COMMAND=$(which powerline-config)
-  # POWERLINE_COMMAND="$($POWERLINE_CONFIG_COMMAND shell command)"
-
-  # export POWERLINE_CONFIG_COMMAND
-  export POWERLINE_BASH_CONTINUATION
-  export POWERLINE_BASH_SELECT
-  # export POWERLINE_COMMAND
-
-  source "${HOME}/.local/lib/python3.10/site-packages/powerline/bindings/bash/powerline.sh"
-  # . ${HOME}/Library/Python/3.8/lib/python/site-packages/powerline/bindings/bash/powerline.sh
-}
-
 direnv_init() {
   eval "$(direnv hook bash)"
 }
@@ -172,7 +139,6 @@ main() {
   google_sdk_init
   direnv_init
   # nvm_init
-  # powerline_init
   
   asdf_init
   # vim_alias
