@@ -1,0 +1,43 @@
+CONF_FILES=~/Config
+ENV_FILES="${CONF_FILES}/env"
+DOT_FILES="${CONF_FILES}/dotfiles"
+PATH_FILES="${CONF_FILES}/env/paths"
+UTILS_PATH="${CONF_FILES}/scripts/utils"
+
+export CONF_FILES
+export ENV_FILES
+export DOT_FILES
+export PATH_FILES
+export UTILS_PATH
+
+load_env_files() {
+  # shellcheck source=/dev/null
+  . "${ENV_FILES}/env"
+  # shellcheck source=/dev/null
+  . "${ENV_FILES}/alias"
+  # shellcheck source=/dev/null
+  . "${PATH_FILES}/pathrc" "${PATH_FILES}"
+  # shellcheck source=/dev/null
+  # . "${ENV_FILES}/git/git-completion.bash"
+  # shellcheck source=/dev/null
+  # shellcheck source=/dev/null
+  # source ~/.fonts/*.sh
+}
+
+set_tools() {
+    # homebrew
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+
+    autoload -U +X bashcompinit && bashcompinit
+    autoload -U +X compinit && compinit
+
+    local ASDF_PATH
+    ASDF_PATH="$(brew --prefix asdf)"
+    # asdf
+    # . /opt/homebrew/opt/asdf/libexec/asdf.sh
+    # shellcheck source=/dev/null
+    source "${ASDF_PATH}/etc/bash_completion.d/asdf"
+}
+
+load_env_files
+set_tools

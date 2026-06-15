@@ -12,7 +12,6 @@ alias ll='ls -lhG'  # -l long listing, human readable, no group info
 alias la="ll -ah"
 alias lt="la -t"
 alias lr="lt -r"
-alias pw="pwd"
 
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -20,24 +19,36 @@ alias t='tail -fn'
 
 alias h='history'
 alias cdw='cd ~/Workspace'
-alias cdg='cd ~/Workspace/go/src'
-alias mysql_stop='/usr/local/bin/mysqladmin -u root -p shutdown'
-alias mysql_start='/usr/local/bin/mysqld_safe &'
+alias cdr='cd ~/Workspace/redrover/src/projects/'
+
+alias vim='/opt/homebrew/opt/vim/bin/vim'
+
 alias publish='python -m SimpleHTTPServer 5001'
 alias publish3='python3 -m http.server 5001'
 
-alias pg-start='pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/logs/server.log start'
-alias pg-stop='pg_ctl stop -m fast'
-alias pg-status='pg_ctl status'
-alias pg-restart='pg_ctl reload'
-alias pg-start-12='/usr/local/opt/postgresql@12/bin/pg_ctl -D /usr/local/var/postgres/ -l /usr/local/var/log/postgres.log start'
-alias pg-stop-12='/usr/local/opt/postgresql@12/bin/pg_ctl -D /usr/local/var/postgres/ -l /usr/local/var/log/postgresql.log stop'
-alias psql-12='/usr/local/opt/postgresql@12/bin/psql'
+# FZF
 
-alias fpm-start='launchctl load -w /usr/local/opt/php56/homebrew.mxcl.php56.plist'
-alias fpm-stop='launchctl unload /usr/local/opt/php56/homebrew.mxcl.php56.plist'
+alias gcb='git branch | fzf | cut -c 3- | xargs git checkout'
 
-alias purgeallbuilds='rm -rf ~/Library/Developer/Xcode/DerivedData/*'
+# MySQL
+# alias mysql_stop='/usr/local/bin/mysqladmin -u root -p shutdown'
+# alias mysql_start='/usr/local/bin/mysqld_safe &'
+
+# Postgres
+# alias pg-start='pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/logs/server.log start'
+# alias pg-stop='pg_ctl stop -m fast'
+# alias pg-status='pg_ctl status'
+# alias pg-restart='pg_ctl reload'
+# alias pg-start-12='/usr/local/opt/postgresql@12/bin/pg_ctl -D /usr/local/var/postgres/ -l /usr/local/var/log/postgres.log start'
+# alias pg-stop-12='/usr/local/opt/postgresql@12/bin/pg_ctl -D /usr/local/var/postgres/ -l /usr/local/var/log/postgresql.log stop'
+# alias psql-12='/usr/local/opt/postgresql@12/bin/psql'
+
+# PHP
+# alias fpm-start='launchctl load -w /usr/local/opt/php56/homebrew.mxcl.php56.plist'
+# alias fpm-stop='launchctl unload /usr/local/opt/php56/homebrew.mxcl.php56.plist'
+
+# iOS
+# alias purgeallbuilds='rm -rf ~/Library/Developer/Xcode/DerivedData/*'
 
 alias docker_clean_images='docker rmi $(docker images -a --filter=dangling=true -q)'
 alias docker_clean_ps='docker rm $(docker ps --filter=status=exited --filter=status=created -q)'

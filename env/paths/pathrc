@@ -17,7 +17,8 @@ PATH_SAVED=${PATH}
 
 load_file_path() {
   PATH_2_READ="$1"
-  for path_file in $(ls ${PATH_2_READ}/0*); do
+  
+  for path_file in "${PATH_2_READ}/"0*; do
     # shellcheck source=/dev/null
     . "${path_file}"
   done
@@ -38,7 +39,7 @@ main(){
 
   PATH=.:${LPATH}:${PATH_SAVED}
 
-  enable_jenv
+  # enable_jenv
 }
 
 main "$@"

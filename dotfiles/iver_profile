@@ -6,12 +6,22 @@
 # This is a setup profile environment file for unix-like systems.
 # See bash_rc or bash_profile for more information.
 
-# set -o errexit
-# set -o nounset
+# set -o errexit 
+set -o nounset
 set -o pipefail
 
 # export LC_ALL=en_US.UTF-8
 # export LANG=en_US.UTF-8
+
+# avoid bash error
+LAST_PWD="${LAST_PWD:+; $LAST_PWD}"
+export LAST_PWD
+EPOCHREALTIME="${EPOCHREALTIME:+; $EPOCHREALTIME}"
+export EPOCHREALTIME
+HISTIGNORE="${HISTIGNORE:+; $HISTIGNORE}"
+export HISTIGNORE
+BASH_PREEXEC_IN_ETC_BASHRC="${BASH_PREEXEC_IN_ETC_BASHRC:+; $BASH_PREEXEC_IN_ETC_BASHRC}"
+export BASH_PREEXEC_IN_ETC_BASHRC
 
 CONF_FILES=~/Config
 ENV_FILES="${CONF_FILES}/env"
@@ -31,13 +41,11 @@ load_env_files() {
   # shellcheck source=/dev/null
   . "${ENV_FILES}/alias"
   # shellcheck source=/dev/null
-  . "${ENV_FILES}/alias_aws"
-  # shellcheck source=/dev/null
   . "${PATH_FILES}/pathrc" "${PATH_FILES}"
   # shellcheck source=/dev/null
   source ${ENV_FILES}/git/git-prompt.sh
   # shellcheck source=/dev/null
-  source ~/.fonts/*.sh
+  # source ~/.fonts/*.sh
 }
 
 load_ssh_keys() {
@@ -46,6 +54,16 @@ load_ssh_keys() {
     . ${UTILS_PATH}/ssh_keys
     read_on_init
   fi
+}
+
+set_git_prompt() {
+  local git_file="${ENV_FILES}/git/git-prompt.sh"
+  local origin="https://raw.githubusercontent.com/git/git/refs/heads/master/contrib/completion/git-prompt.sh"
+  if [ ! -f "${git_file}" ]; then
+    curl -o "${git_file}" ${origin}
+  fi
+  # shellcheck source=/dev/null
+  source "${git_file}"
 }
 
 load_bash_completion() {
@@ -126,6 +144,14 @@ vim_alias() {
   fi
 }
 
+set_default_editor() {
+  if (command -v brew && brew list --formula | grep -c nvim ) > /dev/null 2>&1; then
+    local editor_path
+    editor_path="$(brew --prefix nvim)/bin/nvim"
+    export EDITOR="$editor_path"
+  fi
+}
+
 iterm_shell_integration() {
     ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=no
     ITERM_SHELL_INTEGRATION_INSTALLED=Yes
@@ -144,18 +170,19 @@ main() {
   load_bash_completion
   # pyenv_init
   google_sdk_init
-  # nvm_init
   direnv_init
+  # nvm_init
+  # powerline_init
+  
   asdf_init
   # vim_alias
-  # powerline_init
-  # iterm_shell_integration
-
+  set_default_editor
+  
   if [ -f ~/.profile ]; then
     # shellcheck source=/dev/null
-    . ~/.profile
+    source ~/.profile
   fi
-
+  set_git_prompt
 }
 
 main "$@"

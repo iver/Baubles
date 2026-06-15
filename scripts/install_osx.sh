@@ -58,6 +58,8 @@ export PKGS_AVAILABLE=(
     "xz"
     "zlib"
     "wxwidgets"
+    "bat"
+    "fzf"
     # automake libyaml readline libxslt libtool unixodbc unzip curl
 )
 export UNINSTALL=0

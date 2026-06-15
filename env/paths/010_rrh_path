@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+# rrh_path
+# --
+# (c) Iver!
+# Iván Jaimes <iver@iver.mx>
+# --
+# Goal: add rrh scripts locations to path
+
+rrh_2_path() {
+  if [ -d "${HOME}/Workspace/redrover/libraries/scripts/bin" ];
+    then export LPATH=${HOME}/Workspace/redrover/libraries/scripts/bin:${LPATH};
+  fi
+}
+
+rrh_2_path
+
+asdf_2_path() {
+  if [ -d "${HOME}/.asdf" ];
+    then 
+    export LPATH="${HOME}/.asdf:${LPATH}";
+    export ASDF_DATA_DIR="${HOME}/.asdf";
+    export LPATH="${ASDF_DATA_DIR}/shims:${LPATH}";
+  fi
+}
+
+asdf_2_path

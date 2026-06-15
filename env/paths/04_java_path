@@ -24,6 +24,8 @@ java_2_path() {
   alias java11='export JAVA_HOME=$JAVA_11_HOME'
 }
 
-java_2_path
+# java_2_path
 # default to Java 11
-java11
+# java11
+
+. ~/.asdf/plugins/java/set-java-home.bash

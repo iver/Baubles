@@ -11,8 +11,10 @@
 umask 0007
 
 variables() {
-  export HOSTNAME=$(hostname)
-  export MYHOST=$(hostname | sed -e "s/\..*//g")
+  HOSTNAME=$(hostname)
+  MYHOST=$(hostname | sed -e "s/\..*//g")
+  export HOSTNAME
+  export MYHOST
   export TTYTYPE="TERM"
 
   export LANG="en_US.UTF-8"
@@ -28,7 +30,7 @@ variables() {
   # preserve iex history
   export ERL_AFLAGS="-kernel shell_history enabled"
 
-  export PGDATABASE=postgres
+  export PASSWORD_STORE_ENABLE_EXTENSIONS=true
 }
 
 colors(){
@@ -97,13 +99,17 @@ cmdstyle () {
   get_id_address
   # Cursor and profile
   export PS1="\e]1;${MYIP}\a\e]2;${MYIP}:${MYHOST}\a\
-      \n\[${CRESET}\][\[${TXTYLW}\]${MYIP}\[${CRESET}\](${MYHOST})]:\[${TXTRED}\]\[${TXTWHT}\] \w \
-      \n\[${TXTCYN}\]${USER}\[${TXTRED}\]\$(__git_ps1)\[${CRESET}\] \$> "
+       \n\[${CRESET}\][\[${TXTYLW}\]${MYIP}\[${CRESET}\](${MYHOST})]:\[${TXTRED}\]\[${TXTWHT}\] \w \
+       \n\[${TXTCYN}\]${USER}\[${TXTRED}\]\$(__git_ps1)\[${CRESET}\] \$> "
   export PS2=" ..> "
   # Bash documentation says for "checkwinsize" attribute:
   # "Bash checks the window size after each command and,
   # if necessary, updates the values of LINES and COLUMNS."
-  shopt -s checkwinsize
+
+  # bash and zsh
+  if [[ "${TERM_PROGRAM:-}" != "WarpTerminal" ]]; then
+    shopt -s checkwinsize
+  fi
 }
 
 get_id_address(){

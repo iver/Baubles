@@ -380,15 +380,6 @@ you should place your code here."
   (add-hook 'evil-evilified-state-entry-hook
             '(lambda () (evil-global-set-key 'evilified (kbd "M-<tab>") 'other-window)))
 
-  (use-package lsp-mode
-    :commands lsp
-    :ensure t
-    :diminish lsp-mode
-    :hook
-    (elixir-mode . lsp)
-    :init
-    (add-to-list 'exec-path "~/Config/elixir/elixir-ls"))
-
   (use-package dumb-jump
     :ensure t
     :init
@@ -419,6 +410,7 @@ you should place your code here."
   (setq tab-width 2)
   (setq-default evil-shift-width 2)
   (set-fill-column 100)
+
   ; Elixir and Erlang mode
   (setq flycheck-elixir-credo-strict t)
   ;; Create a buffer-local hook to run elixir-format on save, only when we enable elixir-mode.
