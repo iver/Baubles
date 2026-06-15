@@ -25,7 +25,6 @@ load_env_files() {
 }
 
 set_tools() {
-    # homebrew
     eval "$(/opt/homebrew/bin/brew shellenv)"
 
     autoload -U +X bashcompinit && bashcompinit
@@ -33,11 +32,16 @@ set_tools() {
 
     local ASDF_PATH
     ASDF_PATH="$(brew --prefix asdf)"
-    # asdf
-    # . /opt/homebrew/opt/asdf/libexec/asdf.sh
     # shellcheck source=/dev/null
-    source "${ASDF_PATH}/etc/bash_completion.d/asdf"
+    . "${ASDF_PATH}/libexec/asdf.sh"
+    # shellcheck source=/dev/null
+    . "${ASDF_PATH}/etc/bash_completion.d/asdf"
+}
+
+direnv_init() {
+  eval "$(direnv hook zsh)"
 }
 
 load_env_files
 set_tools
+direnv_init

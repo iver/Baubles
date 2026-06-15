@@ -102,6 +102,8 @@ asdf_init() {
   ASDF_PATH="$(brew --prefix asdf)"
 
   # shellcheck source=/dev/null
+  . "${ASDF_PATH}/libexec/asdf.sh"
+  # shellcheck source=/dev/null
   . "${ASDF_PATH}/etc/bash_completion.d/asdf"
 }
 
@@ -119,16 +121,43 @@ set_default_editor() {
   fi
 }
 
-iterm_shell_integration() {
-    ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=no
-    ITERM_SHELL_INTEGRATION_INSTALLED=Yes
+validate_shell_env() {
+  local ok=0 fail=0
 
-    export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX
-    export ITERM_SHELL_INTEGRATION_INSTALLED
-    if [ "$TERM_PROGRAM" = "iTerm.app" ]; then
-        # shellcheck source=/dev/null
-        source "${CONF_FILES}/maintenance/.iterm2_shell_integration.bash"
+  _chk() {
+    if [ "${2}" = "ok" ]; then
+      printf "  [OK]   %s\n" "${1}"; ok=$((ok + 1))
+    else
+      printf "  [FAIL] %s — %s\n" "${1}" "${2}"; fail=$((fail + 1))
     fi
+  }
+
+  echo "=== Shell Environment Validation ==="
+  echo ""
+
+  echo "-- asdf --"
+  _chk "ASDF_DIR exported"       "$([ -n "${ASDF_DIR}" ]      && echo ok || echo 'not set — asdf.sh not sourced')"
+  _chk "ASDF_DATA_DIR exported"  "$([ -n "${ASDF_DATA_DIR}" ] && echo ok || echo 'not set')"
+  _chk "shims in PATH"           "$(echo "${PATH}" | grep -q 'asdf/shims' && echo ok || echo 'shims not found in PATH')"
+  _chk "asdf binary reachable"   "$(command -v asdf >/dev/null && echo ok || echo 'not found')"
+
+  echo ""
+  echo "-- Elixir --"
+  _chk "mix reachable"    "$(command -v mix    >/dev/null && echo ok || echo 'not found')"
+  _chk "elixir reachable" "$(command -v elixir >/dev/null && echo ok || echo 'not found')"
+  if command -v mix >/dev/null 2>&1; then
+    _chk "mix via asdf shim" "$(which mix | grep -q asdf && echo ok || echo "unexpected path: $(which mix)")"
+  fi
+
+  echo ""
+  echo "-- direnv --"
+  _chk "direnv binary reachable" "$(command -v direnv >/dev/null && echo ok || echo 'not found')"
+  _chk "direnv hooked in shell"  "$(type _direnv_hook >/dev/null 2>&1 && echo ok || echo 'hook missing — direnv not initialized')"
+
+  echo ""
+  printf "=== %d passed, %d failed ===\n" "${ok}" "${fail}"
+  unset -f _chk
+  return ${fail}
 }
 
 main() {
@@ -139,11 +168,11 @@ main() {
   google_sdk_init
   direnv_init
   # nvm_init
-  
+
   asdf_init
   # vim_alias
   set_default_editor
-  
+
   if [ -f ~/.profile ]; then
     # shellcheck source=/dev/null
     source ~/.profile
