@@ -35,8 +35,6 @@ load_env_files() {
   # shellcheck source=/dev/null
   . "${PATH_FILES}/pathrc" "${PATH_FILES}"
   # shellcheck source=/dev/null
-  # . "${ENV_FILES}/git/git-completion.bash"
-  # shellcheck source=/dev/null
   source ${ENV_FILES}/git/git-prompt.sh
   # shellcheck source=/dev/null
   source ~/.fonts/*.sh
@@ -50,15 +48,12 @@ load_ssh_keys() {
   fi
 }
 
-brew_autocomplete() {
-  if [ -d "$(brew --prefix)/etc/bash_completion.d/" ]; then
-    # shellcheck source=/dev/null
-    for link in "$(brew --prefix)"/etc/bash_completion.d/*; do
-      source "${link}"
-    done
-  else
-    echo "run: brew install git bash-completion"
-  fi
+load_bash_completion() {
+  local bash_completion
+  # bash-completion@2: carga perezosa; registra `git` (y ramas) al primer uso.
+  bash_completion="$(brew --prefix)/etc/profile.d/bash_completion.sh"
+  # shellcheck source=/dev/null
+  [ -r "$bash_completion" ] && . "$bash_completion"
 }
 
 pyenv_init() {
@@ -146,7 +141,7 @@ iterm_shell_integration() {
 main() {
   load_env_files
   load_ssh_keys
-  # brew_autocomplete
+  load_bash_completion
   # pyenv_init
   google_sdk_init
   # nvm_init
