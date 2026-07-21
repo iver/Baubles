@@ -85,3 +85,12 @@ tools/bin/*
 0_notes/
 
 **/.claude/settings.local.json
+
+# AI tooling — keep out of client repos (no evidence)
+.claude/
+CLAUDE.md
+CLAUDE.local.md
+AGENTS.md
+.cursor/
+.aider*
+.github/copilot-instructions.md
