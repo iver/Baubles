@@ -10,8 +10,8 @@
 umask 0007
 
 ruby_2_path() {
-  if [ -d ${HOME}/.rvm/rubies/default/bin ];
-    then export LPATH=${HOME}/.rvm/rubies/default/bin:${PATH};
+  if [ -d "${HOME}/.rvm/rubies/default/bin" ];
+    then export LPATH="${HOME}/.rvm/rubies/default/bin:${LPATH}";
   fi
 }
 
