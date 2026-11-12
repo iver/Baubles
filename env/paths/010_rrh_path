@@ -14,14 +14,3 @@ rrh_2_path() {
 }
 
 rrh_2_path
-
-asdf_2_path() {
-  # Preinitializa shims y ASDF_DATA_DIR antes de que asdf.sh cargue en asdf_init.
-  # Necesario para que direnv_init y 04_java_path resuelvan herramientas correctamente.
-  if [ -d "${HOME}/.asdf" ]; then
-    export ASDF_DATA_DIR="${HOME}/.asdf"
-    export LPATH="${ASDF_DATA_DIR}/shims:${LPATH}"
-  fi
-}
-
-asdf_2_path
