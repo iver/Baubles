@@ -67,3 +67,22 @@ extract_function() {
   [[ "${asdf_section}" == *"python3 via asdf shim"* ]]
   [[ "${asdf_section}" != *"[FAIL]"* ]]
 }
+
+@test "java_use selects the version through ASDF_JAVA_VERSION" {
+  export HOME="${BATS_TEST_TMPDIR}/home"
+  mkdir -p "${HOME}"
+  unset ASDF_DATA_DIR
+
+  run bash --noprofile --norc -c '
+    asdf() { printf "asdf %s\n" "$*" >> "${HOME}/asdf.calls"; }
+    _asdf_java_update_java_home() { printf "java home updated\n"; }
+    . "$1"
+    java_use temurin-21.0.3+9
+    printf "version=%s\n" "${ASDF_JAVA_VERSION}"
+    cat "${HOME}/asdf.calls" 2>/dev/null || true' _ "${REPO_ROOT}/env/paths/04_java_path"
+
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"version=temurin-21.0.3+9"* ]]
+  [[ "$output" == *"java home updated"* ]]
+  [[ "$output" != *"asdf shell"* ]]
+}
