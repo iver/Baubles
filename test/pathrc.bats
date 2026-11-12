@@ -102,3 +102,14 @@ load_pathrc() {
     [ "${shims_line}" -lt "${erlang_line}" ]
   fi
 }
+
+@test "normalizes PATH when sourced from zsh" {
+  command -v zsh > /dev/null || skip "zsh is not installed"
+  write_path_file 00_a_path "${FIXTURE}/bin/a"
+
+  run env PATH=".:${BASE_PATH}::/usr/bin" zsh -f -c \
+    '. "$1" "$2"; printf "%s" "$PATH"' _ "${PATHRC}" "${FIXTURE}/paths"
+
+  [ "$status" -eq 0 ]
+  [ "$output" = "${FIXTURE}/bin/a:${BASE_PATH}" ]
+}

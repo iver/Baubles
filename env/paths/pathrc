@@ -18,11 +18,13 @@
 set -o pipefail
 
 # Rebuild PATH without empty entries, the current directory or duplicates,
-# keeping the first occurrence of each entry.
+# keeping the first occurrence of each entry. It walks PATH with parameter
+# expansion instead of word splitting, so it behaves the same in bash and zsh.
 path_normalize() {
-  local entry normalized=""
-  local IFS=":"
-  for entry in ${PATH}; do
+  local entry normalized="" rest="${PATH}:"
+  while [ -n "${rest}" ]; do
+    entry="${rest%%:*}"
+    rest="${rest#*:}"
     case "${entry}" in
       ""|".") continue ;;
     esac
