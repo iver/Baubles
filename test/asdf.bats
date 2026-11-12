@@ -45,3 +45,10 @@ extract_function() {
   [ "$status" -eq 0 ]
   [[ "${stderr}" != *"asdf"* ]]
 }
+
+@test "no tracked file references the pre-0.16 asdf init scripts" {
+  run git -C "${REPO_ROOT}" grep -nE 'libexec/asdf\.sh|bash_completion\.d/asdf\.bash' -- ':!test/'
+
+  [ "$status" -eq 1 ]
+  [ -z "$output" ]
+}

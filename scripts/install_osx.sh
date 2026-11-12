@@ -130,20 +130,10 @@ install_plugins() {
     pcolor "STATUS" "installing asdf languages" "Done  "
 }
 
-configure_asdf() {
-    local BINARY
-    BINARY="\n. $(brew --prefix asdf)/libexec/asdf.sh"
-    local COMPLETION
-    COMPLETION="\n. $(brew --prefix asdf)/etc/bash_completion.d/asdf.bash"
-    add_to_dot_file "${BINARY}"
-    add_to_dot_file "${COMPLETION}"
-}
-
 install_asdf() {
     if ! which -s asdf; then
         pcolor "STATUS" "asdf is not installed" "Install"
         brew_install asdf
-        configure_asdf
         install_plugins_deps
         install_plugins
     else
