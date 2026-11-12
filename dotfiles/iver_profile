@@ -177,6 +177,8 @@ main() {
     # shellcheck source=/dev/null
     source ~/.profile
   fi
+  # ~/.profile and third-party init scripts may add entries again.
+  path_normalize
   set_git_prompt
 }
 
