@@ -63,7 +63,8 @@ ${PROFILE_LINE}" ]
   mkdir -p "${HOME}/.asdf/shims"
   create_bashrc "${DOT_FILES}"
 
-  run env -i HOME="${HOME}" TERM=dumb PATH="/usr/bin:/bin" \
+  bats_require_minimum_version 1.5.0
+  run --separate-stderr env -i HOME="${HOME}" TERM=dumb PATH="/usr/bin:/bin" \
     bash -i -c 'printf "%s" "$PATH"'
 
   [[ ":${output}:" == *":${HOME}/.asdf/shims:"* ]]
