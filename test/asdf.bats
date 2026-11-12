@@ -52,3 +52,18 @@ extract_function() {
   [ "$status" -eq 1 ]
   [ -z "$output" ]
 }
+
+@test "validate_shell_env checks asdf 0.16 without ASDF_DIR" {
+  command -v asdf > /dev/null || skip "asdf is not installed"
+  definition="$(extract_function "${REPO_ROOT}/dotfiles/iver_profile" validate_shell_env)"
+  [ -n "${definition}" ]
+  shims="${ASDF_DATA_DIR:-${HOME}/.asdf}/shims"
+  [ -x "${shims}/python3" ] || skip "no python3 shim installed"
+
+  run env -u ASDF_DIR PATH="${shims}:${PATH}" bash --noprofile --norc -c \
+    'eval "$1"; validate_shell_env' _ "${definition}"
+
+  asdf_section="$(sed -n '/^-- asdf --$/,/^$/p' <<< "${output}")"
+  [[ "${asdf_section}" == *"python3 via asdf shim"* ]]
+  [[ "${asdf_section}" != *"[FAIL]"* ]]
+}
