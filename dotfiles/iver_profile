@@ -97,14 +97,15 @@ direnv_init() {
   eval "$(direnv hook bash)"
 }
 
+# asdf 0.16+ needs no init script: the shims come from env/paths/99_asdf_path,
+# so only the bash completion is loaded here.
 asdf_init() {
-  local ASDF_PATH
-  ASDF_PATH="$(brew --prefix asdf)"
+  local completion
+  completion="$(brew --prefix asdf)/etc/bash_completion.d/asdf"
 
   # shellcheck source=/dev/null
-  . "${ASDF_PATH}/libexec/asdf.sh"
-  # shellcheck source=/dev/null
-  . "${ASDF_PATH}/etc/bash_completion.d/asdf"
+  [ -r "${completion}" ] && . "${completion}"
+  return 0
 }
 
 vim_alias() {
