@@ -24,3 +24,12 @@ source_path_file() {
   [[ "$output" == "${HOME}/.rvm/rubies/default/bin"* ]]
   [[ "$output" != *"/usr/bin"* ]]
 }
+
+@test "python path file does not pin an asdf python install" {
+  mkdir -p "${HOME}/.asdf/installs/python/3.10.3/bin"
+
+  run source_path_file 07_python_path
+
+  [ "$status" -eq 0 ]
+  [[ "$output" != *".asdf/installs"* ]]
+}
