@@ -7,16 +7,44 @@
 #
 #   * Group functions related to dot files
 
-create_profile() {
-    DOT_FILES="$1"
+# Append a line to a file unless it is already there, creating the file
+# when it does not exist.
+append_line_once() {
+    local file="$1"
+    local line="$2"
 
-    if [ -f ~/.bash_profile ]; then
-        cat ~/.bash_profile > ~/.bash_profile.bkp;
-        cp "${DOT_FILES}/iver_profile" ~/.iver_profile
-        # TODO: Add .iver_profile to .bash_profile
-    else
-        ln -s "${DOT_FILES}/iver_profile" ~/.bash_profile
+    if [ -f "${file}" ] && grep -qxF "${line}" "${file}"; then
+        return 0
     fi
+    printf '%s\n' "${line}" >> "${file}"
+}
+
+# Make ~/.bashrc load the repository setup for non-login shells.
+create_bashrc() {
+    local dot_files="$1"
+
+    [ -L ~/.bashrc ] && unlink ~/.bashrc
+    append_line_once ~/.bashrc ". \"${dot_files}/bashrc\""
+}
+
+# Remove every line equal to the given one, keeping the rest of the file.
+remove_line() {
+    local file="$1"
+    local line="$2"
+
+    [ -f "${file}" ] || return 0
+    grep -vxF "${line}" "${file}" > "${file}.tmp" || true
+    mv "${file}.tmp" "${file}"
+}
+
+# Make ~/.bash_profile a local file that sources the repository profile.
+# Installers (Docker, gcloud, ...) append to ~/.bash_profile; keeping it
+# out of the repository stops them from editing tracked files.
+create_profile() {
+    local dot_files="$1"
+
+    [ -L ~/.bash_profile ] && unlink ~/.bash_profile
+    append_line_once ~/.bash_profile ". \"${dot_files}/iver_profile\""
 }
 
 create_vim_data() {
@@ -45,6 +73,8 @@ link_dot_files() {
 }
 
 remove_dot_files() {
+    local dot_files="${1:-${PROJECT_PATH}/dotfiles}"
+
     [ -f ~/.ctags ] && unlink "${HOME}/.ctags"
     [ -f ~/.gitconfig ] && unlink "${HOME}/.gitconfig"
     [ -f ~/.gitignore_global ] && unlink "${HOME}/.gitignore_global"
@@ -54,7 +84,12 @@ remove_dot_files() {
     [ -f ~/.spacemacs ] && unlink "${HOME}/.spacemacs"
     [ -f ~/.tmux.conf ] && unlink "${HOME}/.tmux.conf"
     
-    [ -f ~/.bash_profile ] && unlink "${HOME}/.bash_profile"
+    if [ -L ~/.bash_profile ]; then
+        unlink "${HOME}/.bash_profile"
+    else
+        remove_line ~/.bash_profile ". \"${dot_files}/iver_profile\""
+    fi
+    remove_line ~/.bashrc ". \"${dot_files}/bashrc\""
     rm -f ~/.iver_profile
 
     # if [ -d ~/.vim ]; then

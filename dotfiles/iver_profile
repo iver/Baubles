@@ -177,23 +177,10 @@ main() {
     # shellcheck source=/dev/null
     source ~/.profile
   fi
+  # ~/.profile and third-party init scripts may add entries again.
+  path_normalize
   set_git_prompt
 }
 
 main "$@"
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/iver/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/Users/iver/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/Users/iver/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/Users/iver/miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
 
