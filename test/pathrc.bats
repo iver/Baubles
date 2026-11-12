@@ -9,6 +9,7 @@ setup() {
   FIXTURE="${BATS_TEST_TMPDIR}/fixture"
   mkdir -p "${FIXTURE}/paths" "${FIXTURE}/bin/a" "${FIXTURE}/bin/b" "${FIXTURE}/bin/c"
   export HOME="${FIXTURE}/home"
+  unset ASDF_DATA_DIR
   mkdir -p "${HOME}"
   BASE_PATH="/usr/bin:/bin"
 }
