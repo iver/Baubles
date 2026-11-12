@@ -7,6 +7,26 @@
 #
 #   * Group functions related to dot files
 
+# Append a line to a file unless it is already there, creating the file
+# when it does not exist.
+append_line_once() {
+    local file="$1"
+    local line="$2"
+
+    if [ -f "${file}" ] && grep -qxF "${line}" "${file}"; then
+        return 0
+    fi
+    printf '%s\n' "${line}" >> "${file}"
+}
+
+# Make ~/.bashrc load the repository setup for non-login shells.
+create_bashrc() {
+    local dot_files="$1"
+
+    [ -L ~/.bashrc ] && unlink ~/.bashrc
+    append_line_once ~/.bashrc ". \"${dot_files}/bashrc\""
+}
+
 create_profile() {
     DOT_FILES="$1"
 

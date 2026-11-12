@@ -76,6 +76,7 @@ dot_files() {
     . "${UTILS_PATH}/dot_functions"
     link_dot_files "${DOT_FILES}"
     create_profile "${DOT_FILES}"
+    create_bashrc "${DOT_FILES}"
 }
 
 remove_dot_files() {

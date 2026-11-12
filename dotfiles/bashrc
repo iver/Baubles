@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# --
+# (c) Iver!
+# Iván Jaimes <ivan.iver@gmail.com>
+#
+# Setup for interactive non-login shells (sourced from ~/.bashrc).
+# Login shells use iver_profile; both build PATH with the same pathrc,
+# which is idempotent, so sourcing it again is harmless.
+
+__config_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+
+# shellcheck source=/dev/null
+. "${__config_root}/env/paths/pathrc" "${__config_root}/env/paths"
+
+unset __config_root
