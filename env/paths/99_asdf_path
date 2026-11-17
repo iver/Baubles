@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+# asdf_path
+# --
+# (c) Iver!
+# Iván Jaimes <iver@iver.mx>
+# --
+# Goal: add the asdf shims to path
+#
+# asdf 0.16+ is a single binary: PATH only needs its shims directory.
+# This file loads last, so the shims take precedence over every other
+# path file (homebrew kegs, cargo, ...).
+
+asdf_2_path() {
+  export ASDF_DATA_DIR="${ASDF_DATA_DIR:-${HOME}/.asdf}"
+  [ -d "${ASDF_DATA_DIR}/shims" ] && LPATH="${ASDF_DATA_DIR}/shims:${LPATH}"
+  return 0
+}
+
+asdf_2_path

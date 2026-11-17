@@ -28,14 +28,10 @@ set_tools() {
     eval "$(/opt/homebrew/bin/brew shellenv)"
 
     autoload -U +X bashcompinit && bashcompinit
+    # asdf 0.16+ needs no init script: the shims come from
+    # env/paths/99_asdf_path and its zsh completion (_asdf) from the
+    # site-functions directory that brew shellenv adds to fpath.
     autoload -U +X compinit && compinit
-
-    local ASDF_PATH
-    ASDF_PATH="$(brew --prefix asdf)"
-    # shellcheck source=/dev/null
-    . "${ASDF_PATH}/libexec/asdf.sh"
-    # shellcheck source=/dev/null
-    . "${ASDF_PATH}/etc/bash_completion.d/asdf"
 }
 
 direnv_init() {

@@ -17,7 +17,12 @@ java_use() {
     java_versions
     return 1
   fi
-  asdf shell java "$version"
+  # asdf 0.16+ removed `asdf shell`; ASDF_<TOOL>_VERSION replaces it.
+  export ASDF_JAVA_VERSION="$version"
+  # The asdf-java hook only refreshes JAVA_HOME on directory changes.
+  if declare -F _asdf_java_update_java_home > /dev/null; then
+    _asdf_java_update_java_home
+  fi
 }
 
 # List installed Java versions and recent LTS candidates available to install.

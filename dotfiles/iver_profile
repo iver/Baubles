@@ -97,14 +97,15 @@ direnv_init() {
   eval "$(direnv hook bash)"
 }
 
+# asdf 0.16+ needs no init script: the shims come from env/paths/99_asdf_path,
+# so only the bash completion is loaded here.
 asdf_init() {
-  local ASDF_PATH
-  ASDF_PATH="$(brew --prefix asdf)"
+  local completion
+  completion="$(brew --prefix asdf)/etc/bash_completion.d/asdf"
 
   # shellcheck source=/dev/null
-  . "${ASDF_PATH}/libexec/asdf.sh"
-  # shellcheck source=/dev/null
-  . "${ASDF_PATH}/etc/bash_completion.d/asdf"
+  [ -r "${completion}" ] && . "${completion}"
+  return 0
 }
 
 vim_alias() {
@@ -136,10 +137,10 @@ validate_shell_env() {
   echo ""
 
   echo "-- asdf --"
-  _chk "ASDF_DIR exported"       "$([ -n "${ASDF_DIR}" ]      && echo ok || echo 'not set — asdf.sh not sourced')"
+  _chk "asdf binary reachable"   "$(asdf --version >/dev/null 2>&1 && echo ok || echo 'not found')"
   _chk "ASDF_DATA_DIR exported"  "$([ -n "${ASDF_DATA_DIR}" ] && echo ok || echo 'not set')"
   _chk "shims in PATH"           "$(echo "${PATH}" | grep -q 'asdf/shims' && echo ok || echo 'shims not found in PATH')"
-  _chk "asdf binary reachable"   "$(command -v asdf >/dev/null && echo ok || echo 'not found')"
+  _chk "python3 via asdf shim"   "$(command -v python3 | grep -q 'asdf/shims' && echo ok || echo "unexpected path: $(command -v python3)")"
 
   echo ""
   echo "-- Elixir --"
